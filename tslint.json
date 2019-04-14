@@ -1,0 +1,12 @@
+{
+    "extends": "tslint:recommended",
+    "rules": {
+        "comment-format": [true, "check-space", "check-uppercase"],
+        "indent": [true, "spaces", 2],
+        "no-consecutive-blank-lines": [true, 2],
+        "no-console": {
+            "severity": "warning",
+            "options": ["debug", "info", "log", "time", "timeEnd", "trace"]
+        }
+    },
+}

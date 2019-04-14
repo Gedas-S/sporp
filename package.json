@@ -1,0 +1,14 @@
+{
+  "name": "sporp",
+  "version": "0.0.0",
+  "main": "game.js",
+  "dependencies": {
+    "babylonjs": "^3.3.0",
+    "babylonjs-loaders": "^3.3.0"
+  },
+  "devDependencies": {
+    "tslint": "^5.15.0",
+    "typescript": "^3.4.3"
+  },
+  "scripts": {}
+}
