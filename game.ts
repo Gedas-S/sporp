@@ -11,8 +11,9 @@ class Game {
         this._canvas = document.getElementById(canvasElement) as HTMLCanvasElement;
         this._engine = new BABYLON.Engine(this._canvas, true, {
             deterministicLockstep: true,
-            lockstepMaxSteps: 4
+            lockstepMaxSteps: 4,
         });
+        this._engine.renderEvenInBackground = false;
         this._physicsEngine = new BABYLON.OimoJSPlugin();
         this._physicsEngine.setTimeStep(1/60);
     }
