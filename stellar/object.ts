@@ -6,6 +6,7 @@ class TestSphere {
     private _sphere: BABYLON.Mesh;
 
     constructor(scene: BABYLON.Scene, radius: number, speed: number, orbitRadius: number) {
+        this._scene = scene;
         this._phase = 0;
         this._speed = speed;
         this._orbitRadius = orbitRadius;
