@@ -21,10 +21,10 @@ class TestSphere {
         );
 
         this._material = new BABYLON.StandardMaterial("PlanetMaterial", this._scene);
-        var texture = new BABYLON.NoiseProceduralTexture("texture", 1024, _scene);
-        texture.octaves = Math.random() * 6 + 2;
-        texture.animationSpeedFactor = Math.random() * 10 + 5;
-        texture.persistence = 0.75;
+        var texture = new BABYLON.CloudProceduralTexture("texture", 1024, _scene);
+        texture.cloudColor = BABYLON.Color4.FromColor3(BABYLON.Color3.Random());
+        texture.skyColor = BABYLON.Color4.FromColor3(BABYLON.Color3.Random());
+
         this._material.diffuseTexture = texture;
 
         this._sphere.material = this._material;
