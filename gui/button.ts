@@ -1,16 +1,10 @@
-class TestButton{
-    constructor(name: string, text: string, ui: BABYLON.GUI){
-        this.name = name;
-        this.text = text;
-        this._button  = BABYLON.GUI.Button.CreateSimpleButton(name, text);
-    }
-}
-
 class CameraButton{
-    constructor(ui: BABYLON.GUI){
+    private _button: BABYLON.GUI.Button
+    constructor(ui: BABYLON.GUI.AdvancedDynamicTexture){
         this._button  = BABYLON.GUI.Button.CreateSimpleButton('butt', 'Camera Button');
         this._button.height = 0.1
         this._button.width = 0.1
         ui.addControl(this._button);
+        this._button.onPointerClickObservable.add(this._button.change_view.bind(this._button));
     }
 }
