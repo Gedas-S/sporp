@@ -3,6 +3,7 @@ class Star {
     private _menu: StarMenu;
     private _material: BABYLON.StandardMaterial;
     private _glow: BABYLON.GlowLayer;
+    private _light: BABYLON.PointLight;
 
     constructor(
         private _scene: BABYLON.Scene,
@@ -26,6 +27,9 @@ class Star {
         this._material.emissiveTexture = texture;
         this._material.emissiveColor = this.color;
         this._sphere.material = this._material;
+
+        this._light = new BABYLON.PointLight("SunLight", BABYLON.Vector3.Zero(), this._scene);
+        this._light.intensity = Math.log(_radius) / 4;
 
         this._glow = new BABYLON.GlowLayer("SunGlow", this._scene);
         this._glow.addIncludedOnlyMesh(this._sphere);
@@ -70,6 +74,7 @@ class Star {
         );
         this._sphere.material = this._material;
         this._glow.addIncludedOnlyMesh(this._sphere);
+        this._light.intensity = Math.log(this._radius) / 4;
     }
 
     colorize(): void {

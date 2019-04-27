@@ -34,8 +34,7 @@ class Game {
         this._camera.attachControl(this._canvas, false);
 
         // Create a basic light, aiming 0,1,0 - meaning, to the sky.
-        this._light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0,1,0), this._scene);
-        this._light.intensity = 0.1;
+        // this._light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0,1,0), this._scene);
 
         // Create foreground UI canvas and a scene for it.
         // If we do not put the UI on a different scene, procedural textures mess up the UI.
