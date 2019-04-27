@@ -3,8 +3,9 @@ class TestSphere {
     private _sphere: BABYLON.Mesh;
     private _menu: PlanetMenu;
     private _material: BABYLON.StandardMaterial;
-    private _color: BABYLON.Color3 = BABYLON.Color3.Black();
+    private _color: BABYLON.Color3 = BABYLON.Color3.Random();
     private _selectedColor: BABYLON.Color3 = BABYLON.Color3.Red();
+    private _camera: BABYLON.FreeCamera;
 
     constructor(
         private _scene: BABYLON.Scene,
@@ -21,10 +22,10 @@ class TestSphere {
         );
 
         this._material = new BABYLON.StandardMaterial("PlanetMaterial", this._scene);
-        var texture = new BABYLON.NoiseProceduralTexture("texture", 1024, _scene);
-        texture.octaves = Math.random() * 6 + 2;
-        texture.animationSpeedFactor = Math.random() * 10 + 5;
-        texture.persistence = 0.75;
+        var texture = new BABYLON.CloudProceduralTexture("texture", 1024, _scene);
+        texture.cloudColor = BABYLON.Color4.FromColor3(BABYLON.Color3.Random());
+        texture.skyColor = BABYLON.Color4.FromColor3(BABYLON.Color3.Random());
+
         this._material.diffuseTexture = texture;
 
         this._sphere.material = this._material;
@@ -41,16 +42,42 @@ class TestSphere {
     }
 
     fixedUpdate(): void {
+        // Update phase.
         this._phase = (this._phase + this._speed) % 360;
     }
+
+    moveCamera(camera: BABYLON.FreeCamera): void {
+        this._camera = camera
+    }
+
+    /**
+     * update mesh position
+     */
+    private updatePosition(): void {
+        this._sphere.position.x = Math.cos(this._phase / 180 * Math.PI) * this._orbitRadius;
+        this._sphere.position.z = Math.sin(this._phase / 180 * Math.PI) * this._orbitRadius;
+    }
+
+
+    private offset() { return this._radius*3; }
+    private vec() { return new BABYLON.Vector3(0, this.offset(), -30) }
 
     update(): void {
         // Get delta time. We don't need it, only for reference. :P
         let deltaTime = this._scene.getEngine().getDeltaTime();
-        // Update mesh position.
-        this._sphere.position.x = Math.cos(this._phase / 180 * Math.PI) * this._orbitRadius;
-        this._sphere.position.z = Math.sin(this._phase / 180 * Math.PI) * this._orbitRadius;
+
+        let oldPos = this._sphere.position;
+
+        this.updatePosition();
+
+        let flightDirection = this._sphere.position.add(oldPos).normalize();
+
+        if (this._camera != null)
+         {
+             this._camera.position =  oldPos.add(this.vec());
+         }
     }
+
 
     click(eventData: BABYLON.PointerInfo): void {
         if (eventData.pickInfo.pickedMesh == this._sphere) {

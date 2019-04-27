@@ -4,7 +4,8 @@
   "main": "game.js",
   "dependencies": {
     "babylonjs": "^3.3.0",
-    "babylonjs-gui": "^3.3.0"
+    "babylonjs-gui": "^3.3.0",
+    "babylonjs-procedural-textures": "^3.3.0"
   },
   "devDependencies": {
     "tslint": "^5.15.0",
