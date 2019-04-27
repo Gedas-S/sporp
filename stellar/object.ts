@@ -23,7 +23,7 @@ class TestSphere {
         // Bind update to be called every frame
         this._scene.onBeforeRenderObservable.add(() => this.update());
         // Bind click function (mask 32 is click).
-        this._scene.onPointerObservable.add((data, state) => this.click(data, state), 32);
+        this._scene.onPointerObservable.add(({pickInfo}) => this.click(pickInfo.pickedMesh), 32);
     }
 
     fixedUpdate(): void {
@@ -39,8 +39,8 @@ class TestSphere {
         this._sphere.position.z = Math.sin(this._phase / 180 * Math.PI) * this._orbitRadius;
     }
 
-    click(eventData: BABYLON.PointerInfo, eventState: BABYLON.EventState): void {
-        if (eventData.pickInfo.pickedMesh == this._sphere) {
+    click(pickedMesh: BABYLON.AbstractMesh): void {
+        if (pickedMesh == this._sphere) {
             this.select();
         } else if (this._selected) {
             this.deselect();
