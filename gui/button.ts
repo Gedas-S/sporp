@@ -5,6 +5,7 @@ class CameraButton{
         this._button.height = 0.1
         this._button.width = 0.1
         ui.addControl(this._button);
-        this._button.onPointerClickObservable.add(this._button.change_view.bind(this._button));
+        this._button.onPointerClickObservable.add(this.change_view.bind(this._button));
     }
+    change_view(){}
 }
