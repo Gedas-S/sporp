@@ -2,7 +2,7 @@ class Game {
     private _canvas: HTMLCanvasElement;
     private _engine: BABYLON.Engine;
     private _scene: BABYLON.Scene;
-    private _camera: BABYLON.FreeCamera;
+    public _camera: BABYLON.FreeCamera;
     private _light: BABYLON.Light;
     private _physicsEngine: BABYLON.OimoJSPlugin;
 
@@ -36,6 +36,7 @@ class Game {
 
         // Create a couple of test planets
         let planet1 = new TestSphere(this._scene, 3, 1, 11);
+        planet1.moveCamera(this._camera)
         let planet2 = new TestSphere(this._scene, 1, 3, 6);
     }
 

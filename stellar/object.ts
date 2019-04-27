@@ -1,6 +1,7 @@
 class TestSphere {
     private _phase: number;
     private _sphere: BABYLON.Mesh;
+    private _camera: BABYLON.FreeCamera;
 
     constructor(private _scene: BABYLON.Scene, private _radius: number, private _speed: number, private _orbitRadius: number) {
         this._phase = 0;
@@ -23,11 +24,20 @@ class TestSphere {
         this._phase = (this._phase + this._speed) % 360;
     }
 
+    moveCamera(camera: BABYLON.FreeCamera): void {
+        this._camera = camera
+    }
+
     update(): void {
         // Get delta time. We don't need it, only for reference. :P
         let deltaTime = this._scene.getEngine().getDeltaTime();
         // Update mesh position.
         this._sphere.position.x = Math.cos(this._phase / 180 * Math.PI) * this._orbitRadius;
         this._sphere.position.z = Math.sin(this._phase / 180 * Math.PI) * this._orbitRadius;
+        
+        if (this._camera != null)
+         {
+             this._scene.activeCamera.position = this._sphere.position;
+         }
     }
 }
