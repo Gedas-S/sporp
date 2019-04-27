@@ -3,7 +3,7 @@ class TestSphere {
     private _sphere: BABYLON.Mesh;
     private _menu: PlanetMenu;
     private _material: BABYLON.StandardMaterial;
-    private _color: BABYLON.Color3 = BABYLON.Color3.Black();
+    private _color: BABYLON.Color3 = BABYLON.Color3.Random();
     private _selectedColor: BABYLON.Color3 = BABYLON.Color3.Red();
 
     constructor(
