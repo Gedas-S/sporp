@@ -47,12 +47,9 @@ class Game {
         // Create a couple of test planets
         let planet1 = new TestSphere(this._scene, this.ui, 3, 1, 11);
         let planet2 = new TestSphere(this._scene, this.ui, 1, 3, 6);
-<<<<<<< HEAD
         let button = new CameraButton(this.ui, this._scene);
-=======
         let planet3 = new TestSphere(this._scene, this.ui, 1.5, 0, 0);
         planet3.moveCamera(this._camera)
->>>>>>> origin/crap/aivaras
     }
 
     doRender(): void {
