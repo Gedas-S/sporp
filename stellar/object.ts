@@ -112,6 +112,9 @@ class TestSphere {
     }
 
     deselect(): void {
+        if ((<any>this._ui).on) {
+            return;
+        }
         this._material.emissiveColor = this._color;
         this._menu.hide();
     }

@@ -83,6 +83,9 @@ class Star {
     }
 
     deselect(): void {
+        if ((<any>this._ui).on) {
+            return;
+        }
         this._glow.intensity = 1;
         this._menu.hide();
     }
