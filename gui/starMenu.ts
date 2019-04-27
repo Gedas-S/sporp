@@ -1,6 +1,6 @@
 class StarMenu extends StellarObjectMenu{
     constructor(ui: BABYLON.GUI.AdvancedDynamicTexture, star: Star) {
-        super(ui, "Das PLANETO");
+        super(ui, star.name);
 
         let enlargeBtn = BABYLON.GUI.Button.CreateSimpleButton("Enlarge", "Enlarge");
         enlargeBtn.background = "#77DDCC";
@@ -10,7 +10,7 @@ class StarMenu extends StellarObjectMenu{
         enlargeBtn.width = "200px";
         enlargeBtn.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
         enlargeBtn.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-        enlargeBtn.onPointerClickObservable.add(star.enlarge.bind(star))
+        enlargeBtn.onPointerClickObservable.add(star.enlarge.bind(star));
         this.container.addControl(enlargeBtn);
 
         let colorizeBtn = BABYLON.GUI.Button.CreateSimpleButton("Colorize", "Colorize");
@@ -21,7 +21,7 @@ class StarMenu extends StellarObjectMenu{
         colorizeBtn.width = "200px";
         colorizeBtn.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
         colorizeBtn.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-        colorizeBtn.onPointerClickObservable.add(star.colorize.bind(star))
+        colorizeBtn.onPointerClickObservable.add(star.colorize.bind(star));
         this.container.addControl(colorizeBtn);
     }
 }

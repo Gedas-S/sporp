@@ -10,7 +10,7 @@ class PlanetMenu extends StellarObjectMenu{
         enlargeBtn.width = "200px";
         enlargeBtn.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
         enlargeBtn.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-        enlargeBtn.onPointerClickObservable.add(planet.enlarge.bind(planet))
+        enlargeBtn.onPointerClickObservable.add(planet.enlarge.bind(planet));
         this.container.addControl(enlargeBtn);
     }
 }
