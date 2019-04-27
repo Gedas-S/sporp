@@ -1,27 +1,21 @@
 class TestSphere {
-    private _scene: BABYLON.Scene;
     private _phase: number;
-    private _speed: number;
-    private _orbitRadius: number;
     private _sphere: BABYLON.Mesh;
 
-    constructor(scene: BABYLON.Scene, radius: number, speed: number, orbitRadius: number) {
-        this._scene = scene;
+    constructor(private _scene: BABYLON.Scene, private _radius: number, private _speed: number, private _orbitRadius: number) {
         this._phase = 0;
-        this._speed = speed;
-        this._orbitRadius = orbitRadius;
 
         // Create a built-in "sphere" shape; with 16 segments.
         this._sphere = BABYLON.MeshBuilder.CreateSphere(
             'sphere',
-            {segments: 16, diameter: radius},
-            scene
+            {segments: 16, diameter: this._radius},
+            this._scene
         );
 
         // Bind fixedUpdate to be called every physics tick
-        scene.onBeforeStepObservable.add(() => this.fixedUpdate());
+        this._scene.onBeforeStepObservable.add(() => this.fixedUpdate());
         // Bind update to be called every frame
-        scene.onBeforeRenderObservable.add(() => this.update());
+        this._scene.onBeforeRenderObservable.add(() => this.update());
     }
 
     fixedUpdate(): void {
