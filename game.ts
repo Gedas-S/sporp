@@ -3,8 +3,10 @@ class Game {
     private _engine: BABYLON.Engine;
     private _scene: BABYLON.Scene;
     public _camera: BABYLON.FreeCamera;
+    private _uiScene: BABYLON.Scene;
     private _light: BABYLON.Light;
     private _physicsEngine: BABYLON.OimoJSPlugin;
+    private ui: BABYLON.GUI.AdvancedDynamicTexture;
 
     constructor(canvasElement : string) {
         // Create canvas and engine.
@@ -30,15 +32,22 @@ class Game {
         this._camera.setTarget(BABYLON.Vector3.Zero());
         // Attach the camera to the canvas.
         this._camera.attachControl(this._canvas, false);
-        this._camera.fov = 1.0;
 
         // Create a basic light, aiming 0,1,0 - meaning, to the sky.
         this._light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0,1,0), this._scene);
 
+        // Create foreground UI canvas and a scene for it.
+        // If we do not put the UI on a different scene, procedural textures mess up the UI.
+        this._uiScene = new BABYLON.Scene(this._engine);
+        this._uiScene.autoClear = false;
+        this._camera = new BABYLON.FreeCamera('uiCamera', BABYLON.Vector3.Zero(), this._uiScene);
+        this._camera.setTarget(BABYLON.Vector3.Zero());
+        this.ui = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mainUI", true, this._uiScene);
+
         // Create a couple of test planets
-        let planet1 = new TestSphere(   this._scene, 3, 1, 11);
-        let planet2 = new TestSphere(this._scene, 1, 3, 6);
-        let planet3 = new TestSphere(this._scene, 1.5, 0, 0);
+        let planet1 = new TestSphere(this._scene, this.ui, 3, 1, 11);
+        let planet2 = new TestSphere(this._scene, this.ui, 1, 3, 6);
+        let planet3 = new TestSphere(this._scene, this.ui, 1.5, 0, 0);
         planet3.moveCamera(this._camera)
     }
 
@@ -46,6 +55,7 @@ class Game {
         // Run the render loop.
         this._engine.runRenderLoop(() => {
             this._scene.render();
+            this._uiScene.render();
         });
 
         // The canvas/window resize event handler.
