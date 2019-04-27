@@ -52,7 +52,8 @@ class Game {
         let planet2 = new TestSphere(this._scene, this.ui, 1, 3, 16);
         let button = new CameraButton(this.ui, this._scene);
         let planet3 = new TestSphere(this._scene, this.ui, 1.5, 0, 0);
-        planet3.moveCamera(this._camera)
+        planet3.moveCamera(this._camera);
+        let sattelite = new TestSphere(this._scene, this.ui, 2, 0.2, 3, planet1);
     }
 
     doRender(): void {

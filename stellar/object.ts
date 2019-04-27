@@ -12,7 +12,8 @@ class TestSphere {
         private _ui: BABYLON.GUI.AdvancedDynamicTexture,
         private _radius: number,
         private _speed: number,
-        private _orbitRadius: number
+        private _orbitRadius: number,
+        private _parent: TestSphere = null,
     ) {
         // Create a built-in "sphere" shape; with 16 segments.
         this._sphere = BABYLON.MeshBuilder.CreateSphere(
@@ -54,8 +55,15 @@ class TestSphere {
      * update mesh position
      */
     private updatePosition(): void {
-        this._sphere.position.x = Math.cos(this._phase / 180 * Math.PI) * this._orbitRadius;
-        this._sphere.position.z = Math.sin(this._phase / 180 * Math.PI) * this._orbitRadius;
+        if (this._parent) {
+            var px = this._parent._sphere.position.x
+            var pz = this._parent._sphere.position.z
+        } else {
+            var px = 0
+            var pz = 0
+        }
+        this._sphere.position.x = Math.cos(this._phase / 180 * Math.PI) * this._orbitRadius + px;
+        this._sphere.position.z = Math.sin(this._phase / 180 * Math.PI) * this._orbitRadius + pz;
     }
 
 
