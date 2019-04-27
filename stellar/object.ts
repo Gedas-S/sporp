@@ -38,16 +38,24 @@ class TestSphere {
         this._camera = camera
     }
 
-    update(): void {
-        // Get delta time. We don't need it, only for reference. :P
-        let deltaTime = this._scene.getEngine().getDeltaTime();
+    private updatePosition(): void {
         // Update mesh position.
         this._sphere.position.x = Math.cos(this._phase / 180 * Math.PI) * this._orbitRadius;
         this._sphere.position.z = Math.sin(this._phase / 180 * Math.PI) * this._orbitRadius;
-        
+    }
+
+
+
+    update(): void {
+        // Get delta time. We don't need it, only for reference. :P
+        let deltaTime = this._scene.getEngine().getDeltaTime();
+
+        this.updatePosition();
+
         if (this._camera != null)
          {
-             this._scene.activeCamera.position = this._sphere.position;
+             this._camera.position =  BABYLON.Vector3.Zero().subtract( this._sphere.position);
+             this._camera.setTarget(this._sphere.position)
          }
     }
 
