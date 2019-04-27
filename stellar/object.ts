@@ -21,6 +21,12 @@ class TestSphere {
         );
 
         this._material = new BABYLON.StandardMaterial("PlanetMaterial", this._scene);
+        var texture = new BABYLON.NoiseProceduralTexture("texture", 1024, _scene);
+        texture.octaves = Math.random() * 6 + 2;
+        texture.animationSpeedFactor = Math.random() * 10 + 5;
+        texture.persistence = 0.75;
+        this._material.diffuseTexture = texture;
+
         this._sphere.material = this._material;
         this._material.emissiveColor = this._color;
 
