@@ -45,17 +45,22 @@ class TestSphere {
     }
 
 
+    private offset = this._radius*3;
+    private vec = new BABYLON.Vector3(0, this.offset, -30)
 
     update(): void {
         // Get delta time. We don't need it, only for reference. :P
         let deltaTime = this._scene.getEngine().getDeltaTime();
 
+        let oldPos = this._sphere.position;
+
         this.updatePosition();
+
+        let flightDirection = this._sphere.position.add(oldPos).normalize();
 
         if (this._camera != null)
          {
-             this._camera.position =  BABYLON.Vector3.Zero().subtract( this._sphere.position);
-             this._camera.setTarget(this._sphere.position)
+             this._camera.position =  oldPos.add(this.vec);
          }
     }
 

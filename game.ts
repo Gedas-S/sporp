@@ -30,14 +30,16 @@ class Game {
         this._camera.setTarget(BABYLON.Vector3.Zero());
         // Attach the camera to the canvas.
         this._camera.attachControl(this._canvas, false);
+        this._camera.fov = 1.0;
 
         // Create a basic light, aiming 0,1,0 - meaning, to the sky.
         this._light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0,1,0), this._scene);
 
         // Create a couple of test planets
-        let planet1 = new TestSphere(this._scene, 3, 1, 11);
-        planet1.moveCamera(this._camera)
+        let planet1 = new TestSphere(   this._scene, 3, 1, 11);
         let planet2 = new TestSphere(this._scene, 1, 3, 6);
+        let planet3 = new TestSphere(this._scene, 1.5, 0, 0);
+        planet3.moveCamera(this._camera)
     }
 
     doRender(): void {
