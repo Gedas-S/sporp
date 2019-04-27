@@ -5,6 +5,7 @@ class TestSphere {
     private _material: BABYLON.StandardMaterial;
     private _color: BABYLON.Color3 = BABYLON.Color3.Random();
     private _selectedColor: BABYLON.Color3 = BABYLON.Color3.Red();
+    private _camera: BABYLON.FreeCamera;
 
     constructor(
         private _scene: BABYLON.Scene,
@@ -41,16 +42,42 @@ class TestSphere {
     }
 
     fixedUpdate(): void {
+        // Update phase.
         this._phase = (this._phase + this._speed) % 360;
     }
+
+    moveCamera(camera: BABYLON.FreeCamera): void {
+        this._camera = camera
+    }
+
+    /**
+     * update mesh position
+     */
+    private updatePosition(): void {
+        this._sphere.position.x = Math.cos(this._phase / 180 * Math.PI) * this._orbitRadius;
+        this._sphere.position.z = Math.sin(this._phase / 180 * Math.PI) * this._orbitRadius;
+    }
+
+
+    private offset() { return this._radius*3; }
+    private vec() { return new BABYLON.Vector3(0, this.offset(), -30) }
 
     update(): void {
         // Get delta time. We don't need it, only for reference. :P
         let deltaTime = this._scene.getEngine().getDeltaTime();
-        // Update mesh position.
-        this._sphere.position.x = Math.cos(this._phase / 180 * Math.PI) * this._orbitRadius;
-        this._sphere.position.z = Math.sin(this._phase / 180 * Math.PI) * this._orbitRadius;
+
+        let oldPos = this._sphere.position;
+
+        this.updatePosition();
+
+        let flightDirection = this._sphere.position.add(oldPos).normalize();
+
+        if (this._camera != null)
+         {
+             this._camera.position =  oldPos.add(this.vec());
+         }
     }
+
 
     click(eventData: BABYLON.PointerInfo): void {
         if (eventData.pickInfo.pickedMesh == this._sphere) {

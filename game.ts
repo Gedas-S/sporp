@@ -2,8 +2,8 @@ class Game {
     private _canvas: HTMLCanvasElement;
     private _engine: BABYLON.Engine;
     private _scene: BABYLON.Scene;
+    public _camera: BABYLON.FreeCamera;
     private _uiScene: BABYLON.Scene;
-    private _camera: BABYLON.FreeCamera;
     private _light: BABYLON.Light;
     private _physicsEngine: BABYLON.OimoJSPlugin;
     private ui: BABYLON.GUI.AdvancedDynamicTexture;
@@ -50,6 +50,9 @@ class Game {
         // Create a couple of test planets
         let planet1 = new TestSphere(this._scene, this.ui, 3, 1, 21);
         let planet2 = new TestSphere(this._scene, this.ui, 1, 3, 16);
+        let button = new CameraButton(this.ui, this._scene);
+        let planet3 = new TestSphere(this._scene, this.ui, 1.5, 0, 0);
+        planet3.moveCamera(this._camera)
     }
 
     doRender(): void {
