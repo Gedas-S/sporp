@@ -5,6 +5,7 @@ class Game {
     private _camera: BABYLON.FreeCamera;
     private _light: BABYLON.Light;
     private _physicsEngine: BABYLON.OimoJSPlugin;
+    private ui: BABYLON.GUI.AdvancedDynamicTexture;
 
     constructor(canvasElement : string) {
         // Create canvas and engine.
@@ -34,9 +35,12 @@ class Game {
         // Create a basic light, aiming 0,1,0 - meaning, to the sky.
         this._light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0,1,0), this._scene);
 
+        // Create foreground UI canvas.
+        this.ui = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mainUI");
+
         // Create a couple of test planets
-        let planet1 = new TestSphere(this._scene, 3, 1, 11);
-        let planet2 = new TestSphere(this._scene, 1, 3, 6);
+        let planet1 = new TestSphere(this._scene, this.ui, 3, 1, 11);
+        let planet2 = new TestSphere(this._scene, this.ui, 1, 3, 6);
     }
 
     doRender(): void {

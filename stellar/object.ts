@@ -6,7 +6,13 @@ class TestSphere {
     private _color: BABYLON.Color3 = BABYLON.Color3.Black();
     private _selectedColor: BABYLON.Color3 = BABYLON.Color3.Red();
 
-    constructor(private _scene: BABYLON.Scene, private _radius: number, private _speed: number, private _orbitRadius: number) {
+    constructor(
+        private _scene: BABYLON.Scene,
+        private _ui: BABYLON.GUI.AdvancedDynamicTexture,
+        private _radius: number,
+        private _speed: number,
+        private _orbitRadius: number
+    ) {
         // Create a built-in "sphere" shape; with 16 segments.
         this._sphere = BABYLON.MeshBuilder.CreateSphere(
             'sphere',
