@@ -47,7 +47,7 @@ class Game {
         // Create a couple of test planets
         let planet1 = new TestSphere(this._scene, this.ui, 3, 1, 11);
         let planet2 = new TestSphere(this._scene, this.ui, 1, 3, 6);
-        let button = new CameraButton(this.ui);
+        let button = new CameraButton(this.ui, this._scene);
     }
 
     doRender(): void {
