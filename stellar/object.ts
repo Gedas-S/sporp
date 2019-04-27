@@ -1,6 +1,10 @@
 class TestSphere {
-    private _phase: number;
+    private _phase: number = 0;
     private _sphere: BABYLON.Mesh;
+    private _selected: boolean = false;
+    private _material: BABYLON.StandardMaterial;
+    private _color: BABYLON.Color3 = BABYLON.Color3.Black();
+    private _selectedColor: BABYLON.Color3 = BABYLON.Color3.Red();
     private _camera: BABYLON.FreeCamera;
 
     constructor(private _scene: BABYLON.Scene, private _radius: number, private _speed: number, private _orbitRadius: number) {
@@ -13,10 +17,16 @@ class TestSphere {
             this._scene
         );
 
+        this._material = new BABYLON.StandardMaterial("PlanetMaterial", this._scene);
+        this._sphere.material = this._material;
+        this._material.emissiveColor = this._color;
+
         // Bind fixedUpdate to be called every physics tick
         this._scene.onBeforeStepObservable.add(() => this.fixedUpdate());
         // Bind update to be called every frame
         this._scene.onBeforeRenderObservable.add(() => this.update());
+        // Bind click function (mask 32 is click).
+        this._scene.onPointerObservable.add(({pickInfo}) => this.click(pickInfo.pickedMesh), 32);
     }
 
     fixedUpdate(): void {
@@ -39,5 +49,23 @@ class TestSphere {
          {
              this._scene.activeCamera.position = this._sphere.position;
          }
+    }
+
+    click(pickedMesh: BABYLON.AbstractMesh): void {
+        if (pickedMesh == this._sphere) {
+            this.select();
+        } else if (this._selected) {
+            this.deselect();
+        }
+    }
+
+    select(): void {
+        this._selected = true;
+        this._material.emissiveColor = this._selectedColor;
+    }
+
+    deselect(): void {
+        this._selected = false;
+        this._material.emissiveColor = this._color;
     }
 }
