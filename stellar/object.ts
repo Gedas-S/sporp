@@ -19,15 +19,14 @@ class TestSphere {
         this._material.emissiveColor = this._color;
 
         // Bind fixedUpdate to be called every physics tick
-        this._scene.onBeforeStepObservable.add(() => this.fixedUpdate());
+        this._scene.onBeforeStepObservable.add(this.fixedUpdate.bind(this));
         // Bind update to be called every frame
-        this._scene.onBeforeRenderObservable.add(() => this.update());
+        this._scene.onBeforeRenderObservable.add(this.update.bind(this));
         // Bind click function (mask 32 is click).
-        this._scene.onPointerObservable.add(({pickInfo}) => this.click(pickInfo.pickedMesh), 32);
+        this._scene.onPointerObservable.add(this.click.bind(this), 32);
     }
 
     fixedUpdate(): void {
-        // Update phase.
         this._phase = (this._phase + this._speed) % 360;
     }
 
@@ -39,8 +38,8 @@ class TestSphere {
         this._sphere.position.z = Math.sin(this._phase / 180 * Math.PI) * this._orbitRadius;
     }
 
-    click(pickedMesh: BABYLON.AbstractMesh): void {
-        if (pickedMesh == this._sphere) {
+    click(eventData: BABYLON.PointerInfo): void {
+        if (eventData.pickInfo.pickedMesh == this._sphere) {
             this.select();
         } else if (this._selected) {
             this.deselect();
