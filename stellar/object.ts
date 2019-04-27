@@ -1,7 +1,7 @@
 class TestSphere {
     private _phase: number = 0;
     private _sphere: BABYLON.Mesh;
-    private _selected: boolean = false;
+    private _menu: PlanetMenu;
     private _material: BABYLON.StandardMaterial;
     private _color: BABYLON.Color3 = BABYLON.Color3.Black();
     private _selectedColor: BABYLON.Color3 = BABYLON.Color3.Red();
@@ -23,6 +23,8 @@ class TestSphere {
         this._material = new BABYLON.StandardMaterial("PlanetMaterial", this._scene);
         this._sphere.material = this._material;
         this._material.emissiveColor = this._color;
+
+        this._menu = new PlanetMenu(this._ui, this);
 
         // Bind fixedUpdate to be called every physics tick
         this._scene.onBeforeStepObservable.add(this.fixedUpdate.bind(this));
@@ -47,18 +49,29 @@ class TestSphere {
     click(eventData: BABYLON.PointerInfo): void {
         if (eventData.pickInfo.pickedMesh == this._sphere) {
             this.select();
-        } else if (this._selected) {
+        } else if (this._menu) {
             this.deselect();
         }
     }
 
+    enlarge(): void {
+        this._radius += 1;
+        this._scene.removeMesh(this._sphere);
+        this._sphere = BABYLON.MeshBuilder.CreateSphere(
+            'sphere',
+            {segments: 16, diameter: this._radius},
+            this._scene
+        );
+        this._sphere.material = this._material;
+    }
+
     select(): void {
-        this._selected = true;
         this._material.emissiveColor = this._selectedColor;
+        this._menu.show();
     }
 
     deselect(): void {
-        this._selected = false;
         this._material.emissiveColor = this._color;
+        this._menu.hide();
     }
 }
