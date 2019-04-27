@@ -35,6 +35,7 @@ class Game {
 
         // Create a basic light, aiming 0,1,0 - meaning, to the sky.
         this._light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0,1,0), this._scene);
+        this._light.intensity = 0.1;
 
         // Create foreground UI canvas and a scene for it.
         // If we do not put the UI on a different scene, procedural textures mess up the UI.
@@ -44,9 +45,11 @@ class Game {
         this._camera.setTarget(BABYLON.Vector3.Zero());
         this.ui = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mainUI", true, this._uiScene);
 
+        // Create a test star
+        let star = Star.Random(this._scene, this.ui, "Test star in the middle");
         // Create a couple of test planets
-        let planet1 = new TestSphere(this._scene, this.ui, 3, 1, 11);
-        let planet2 = new TestSphere(this._scene, this.ui, 1, 3, 6);
+        let planet1 = new TestSphere(this._scene, this.ui, 3, 1, 21);
+        let planet2 = new TestSphere(this._scene, this.ui, 1, 3, 16);
         let button = new CameraButton(this.ui, this._scene);
         let planet3 = new TestSphere(this._scene, this.ui, 1.5, 0, 0);
         planet3.moveCamera(this._camera)
