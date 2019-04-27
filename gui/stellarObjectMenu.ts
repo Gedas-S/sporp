@@ -18,8 +18,8 @@ class StellarObjectMenu {
         header.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
         this.container.addControl(header);
 
-        this.container.onPointerEnterObservable.add((function(){this.ui.on = true}).bind(this));
-        this.container.onPointerOutObservable.add((function(){this.ui.on = false}).bind(this));
+        this.container.onPointerEnterObservable.add((function(){this.ui.onGUI = true}).bind(this));
+        this.container.onPointerOutObservable.add((function(){this.ui.onGUI = false}).bind(this));
     }
 
     show(): void {

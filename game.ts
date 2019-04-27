@@ -44,6 +44,7 @@ class Game {
         this._camera = new BABYLON.FreeCamera('uiCamera', BABYLON.Vector3.Zero(), this._uiScene);
         this._camera.setTarget(BABYLON.Vector3.Zero());
         this.ui = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mainUI", true, this._uiScene);
+        (<any>this.ui).onGUI = false;
 
         // Create a test star
         let star = Star.Random(this._scene, this.ui, "Test star in the middle");
