@@ -18,27 +18,27 @@ class Star extends StellarObject{
         this._sphere = BABYLON.MeshBuilder.CreateSphere(
             'sphere',
             {segments: 16, diameter: this._radius},
-            this._scene
+            system.scene
         );
 
-        this._material = new BABYLON.StandardMaterial("PlanetMaterial", this._scene);
-        var texture = new BABYLON.FireProceduralTexture("texture", 1024, this._scene);
+        this._material = new BABYLON.StandardMaterial("PlanetMaterial", system.scene);
+        var texture = new BABYLON.FireProceduralTexture("texture", 1024, system.scene);
         texture.speed = new BABYLON.Vector2(0.02, 0.02);
         this._material.diffuseTexture = texture;
         this._material.emissiveTexture = texture;
         this._material.emissiveColor = this.color;
         this._sphere.material = this._material;
 
-        this._light = new BABYLON.PointLight("SunLight", BABYLON.Vector3.Zero(), this._scene);
+        this._light = new BABYLON.PointLight("SunLight", BABYLON.Vector3.Zero(), system.scene);
         this._light.intensity = Math.log(_radius) / 4;
 
-        this._glow = new BABYLON.GlowLayer("SunGlow", this._scene);
+        this._glow = new BABYLON.GlowLayer("SunGlow", system.scene);
         this._glow.addIncludedOnlyMesh(this._sphere);
 
         this._menu = new StarMenu(this._ui, this);
 
         // Bind click function (mask 32 is click).
-        this._scene.onPointerObservable.add(this.click.bind(this), 32);
+        system.scene.onPointerObservable.add(this.click.bind(this), 32);
     }
 
     static Random(system: StarSystem, ui: GameGUI, name: string): Star {
@@ -70,12 +70,12 @@ class Star extends StellarObject{
 
     enlarge(): void {
         this._radius += 1;
-        this._scene.removeMesh(this._sphere);
+        this.system.scene.removeMesh(this._sphere);
         this._glow.removeIncludedOnlyMesh(this._sphere);
         this._sphere = BABYLON.MeshBuilder.CreateSphere(
             'sphere',
             {segments: 16, diameter: this._radius},
-            this._scene
+            this.system.scene
         );
         this._sphere.material = this._material;
         this._glow.addIncludedOnlyMesh(this._sphere);
