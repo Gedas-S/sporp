@@ -1,7 +1,8 @@
 class CameraButton{
     private _button: BABYLON.GUI.Button
     private _scene: BABYLON.Scene
-    constructor(protected ui: BABYLON.GUI.AdvancedDynamicTexture, scene: BABYLON.Scene){
+    private _starSystem: StarSystem
+    constructor(protected ui: BABYLON.GUI.AdvancedDynamicTexture, scene: BABYLON.Scene, starSystem: StarSystem){
         this._button  = BABYLON.GUI.Button.CreateSimpleButton('butt', 'Reset Camera');
         this._button.height = 0.1;
         this._button.width = 0.1;
@@ -12,8 +13,10 @@ class CameraButton{
         this._scene = scene;
         this._button.onPointerEnterObservable.add(function(){(<any>ui).onGUI = true});
         this._button.onPointerOutObservable.add(function(){(<any>ui).onGUI = false});
+        this._starSystem = starSystem;
     }
     change_view(){
+        this._scene.onBeforeRenderObservable.remove(this._starSystem.followControl)
         let camera = this._scene.activeCamera as BABYLON.FreeCamera;
         camera.position = new BABYLON.Vector3(0, 15, -40);
         camera.setTarget(BABYLON.Vector3.Zero());

@@ -107,7 +107,8 @@ class Planet extends StellarObject {
         this._material.emissiveColor = this._selectedColor;
         this._menu.show();
 
-        let q = (this._scene.onBeforeRenderObservable.add(this.lookAtMe.bind(this)))
+        var q = (this._scene.onBeforeRenderObservable.add(this.lookAtMe.bind(this)))
+        this.system.followControl = q;
     }
 
     deselect(): void {
