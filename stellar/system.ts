@@ -5,7 +5,7 @@ class StarSystem {
     private _planetList: PlanetList;
     public followControl: BABYLON.Observer<BABYLON.Scene>;
 
-    constructor(public scene: BABYLON.Scene, public ui: BABYLON.GUI.AdvancedDynamicTexture){
+    constructor(public scene: BABYLON.Scene, public ui: BABYLON.GUI.AdvancedDynamicTexture, public name: string){
         // Create a test star
         this.stars.push(Star.Random(this, this.ui, "Test star in the middle"));
         // Create a couple of test planets

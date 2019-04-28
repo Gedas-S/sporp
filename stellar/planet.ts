@@ -79,7 +79,7 @@ class Planet extends StellarObject {
     click(eventData: BABYLON.PointerInfo): void {
         if (eventData.pickInfo.pickedMesh == this._sphere) {
             this.select();
-        } else if (this._menu) {
+        } else if (this._menu._shown) {
             this.deselect();
         }
     }

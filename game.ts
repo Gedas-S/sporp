@@ -45,7 +45,7 @@ class Game {
         this.ui = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mainUI", true, this._uiScene);
         (<any>this.ui).onGUI = false;
 
-        let starSystem = new StarSystem(this._scene, this.ui);
+        let starSystem = new StarSystem(this._scene, this.ui, "Systemo uno");
         let button = new CameraButton(this.ui, this._scene);
         let ship1 = new BaseShip(this._scene, this.ui, 2, new BABYLON.Vector3(0.3, 0, 0), new BABYLON.Vector3(-10, -1, 1))
     }

@@ -1,6 +1,6 @@
 class StellarObjectMenu {
     protected container: BABYLON.GUI.Container;
-    protected _shown: boolean = false;
+    public _shown: boolean = false;
 
     constructor(protected ui: BABYLON.GUI.AdvancedDynamicTexture, name: string) {
         this.container = new BABYLON.GUI.Container("StellarObjectMenu");

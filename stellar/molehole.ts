@@ -1,5 +1,7 @@
 class MoleHole extends StellarObject {
     private _particleSystem: BABYLON.ParticleSystem;
+    private _selectorMesh: BABYLON.Mesh;
+    private _menu: PlanetMenu;
 
     constructor(
         public ui: BABYLON.GUI.AdvancedDynamicTexture,
@@ -22,6 +24,20 @@ class MoleHole extends StellarObject {
         this.color = color || new BABYLON.Color3(0.04, 0.4, 0.03);
         this._particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
         this._particleSystem.start();
+
+        this._selectorMesh = BABYLON.MeshBuilder.CreateSphere(
+            "holeSelector",
+            {segments: 3, diameter: 3},
+            system.scene
+        );
+        this._selectorMesh.position = position;
+        this._selectorMesh.material = new BABYLON.Material("transparent", this._scene)
+        this._selectorMesh.material.alpha = 0;
+
+        this._menu = new GateMenu(ui, this);
+
+        // Bind click function (mask 32 is click).
+        this.system.scene.onPointerObservable.add(this.click.bind(this), 32);
     }
 
     set color(Color: BABYLON.Color3) {
@@ -33,6 +49,27 @@ class MoleHole extends StellarObject {
 
     get position(): BABYLON.Vector3{
         return BABYLON.Vector3.Zero();
+    }
+
+
+
+    click(eventData: BABYLON.PointerInfo): void {
+        if (eventData.pickInfo.pickedMesh == this._selectorMesh) {
+            this.select();
+        } else if (this._menu) {
+            this.deselect();
+        }
+    }
+
+    select(): void {
+        this._menu.show();
+    }
+
+    deselect(): void {
+        if ((<any>this.ui).onGUI) {
+            return;
+        }
+        this._menu.hide();
     }
 
 }
