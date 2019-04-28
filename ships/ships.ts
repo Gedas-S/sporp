@@ -29,7 +29,12 @@ class BaseShip{
         this._system.scene.onPointerObservable.add(this.click.bind(this), 32);
 
         this._menu = new ShipMenu(this._system.ui, this);
-        this._system.ui.onKeyDownObservable.add(this.select.bind(this));
+        this._system.ui.onKeyDownObservable.add((eventKey)=>{
+            if (eventKey == 87)
+            {
+                this.select()
+            }
+        });
     }
     fixedUpdate(): void {
         // Update phase.
