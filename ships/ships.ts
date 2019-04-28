@@ -69,7 +69,7 @@ class BaseShip{
     }
 
     deselect(): void {
-        if ((<any>this._system.ui).onGUI) {
+        if (this._system.ui.mouseOnGUI) {
             return;
         }
         this._selected = false;
