@@ -1,7 +1,7 @@
 
 
-declare module 'babylonjs' { 
-    export = BABYLON; 
+declare module 'babylonjs' {
+    export = BABYLON;
 }
 declare module BABYLON {
     /**
@@ -249,7 +249,7 @@ interface Document {
     webkitCancelFullScreen(): void;
     requestPointerLock(): void;
     exitPointerLock(): void;
-    fullscreen: boolean;
+    readonly fullscreen: boolean;
     mozFullScreen: boolean;
     msIsFullScreen: boolean;
     readonly webkitIsFullScreen: boolean;
@@ -300,7 +300,7 @@ interface Element {
     webkitRequestFullScreen: () => void;
 }
 interface Screen {
-    readonly orientation: string;
+    readonly orientation: ScreenOrientation;
     readonly mozOrientation: string;
 }
 interface Math {
@@ -2803,15 +2803,15 @@ declare module BABYLON {
          */
         constructor(
         /** The mesh or sprite that triggered the action */
-        source: any, 
+        source: any,
         /** The X mouse cursor position at the time of the event */
-        pointerX: number, 
+        pointerX: number,
         /** The Y mouse cursor position at the time of the event */
-        pointerY: number, 
+        pointerY: number,
         /** The mesh that is currently pointed at (can be null) */
-        meshUnderPointer: Nullable<AbstractMesh>, 
+        meshUnderPointer: Nullable<AbstractMesh>,
         /** the original (browser) event that triggered the ActionEvent */
-        sourceEvent?: any, 
+        sourceEvent?: any,
         /** additional data for the event */
         additionalData?: any);
         /**
@@ -3175,11 +3175,11 @@ declare module BABYLON {
          * @param value the value compared by the conditional operator against the current value of the property
          * @param operator the conditional operator, default ValueCondition.IsEqual
          */
-        constructor(actionManager: ActionManager, target: any, 
+        constructor(actionManager: ActionManager, target: any,
         /** path to specify the property of the target the conditional operator uses  */
-        propertyPath: string, 
+        propertyPath: string,
         /** the value compared by the conditional operator against the current value of the property */
-        value: any, 
+        value: any,
         /** the conditional operator, default ValueCondition.IsEqual */
         operator?: number);
         /**
@@ -3215,7 +3215,7 @@ declare module BABYLON {
          * @param actionManager manager for the action the condition applies to
          * @param predicate defines the predicate function used to validate the condition
          */
-        constructor(actionManager: ActionManager, 
+        constructor(actionManager: ActionManager,
         /** defines the predicate function used to validate the condition */
         predicate: () => boolean);
         /**
@@ -3245,7 +3245,7 @@ declare module BABYLON {
          * @param target of the condition
          * @param value to compare with target state
          */
-        constructor(actionManager: ActionManager, target: any, 
+        constructor(actionManager: ActionManager, target: any,
         /** Value to compare with target state  */
         value: string);
         /**
@@ -4539,15 +4539,15 @@ declare module BABYLON {
          * @param onAnimationEnd defines a callback to call when animation ends if it is not looping
          * @param animations defines a group of animation to add to the new Animatable
          */
-        constructor(scene: Scene, 
+        constructor(scene: Scene,
         /** defines the target object */
-        target: any, 
+        target: any,
         /** defines the starting frame number (default is 0) */
-        fromFrame?: number, 
+        fromFrame?: number,
         /** defines the ending frame number (default is 100) */
-        toFrame?: number, 
+        toFrame?: number,
         /** defines if the animation must loop (default is false)  */
-        loopAnimation?: boolean, speedRatio?: number, 
+        loopAnimation?: boolean, speedRatio?: number,
         /** defines a callback to call when animation ends if it is not looping */
         onAnimationEnd?: (() => void) | null | undefined, animations?: Animation[]);
         /**
@@ -4644,9 +4644,9 @@ declare module BABYLON {
          */
         constructor(
         /**The name of the animation range**/
-        name: string, 
+        name: string,
         /**The starting frame of the animation */
-        from: number, 
+        from: number,
         /**The ending frame of the animation*/
         to: number);
         /**
@@ -4677,9 +4677,9 @@ declare module BABYLON {
          */
         constructor(
         /** The frame for which the event is triggered **/
-        frame: number, 
+        frame: number,
         /** The event to perform when triggered **/
-        action: (currentFrame: number) => void, 
+        action: (currentFrame: number) => void,
         /** Specifies if the event should be triggered only once**/
         onlyOnce?: boolean | undefined);
         /** @hidden */
@@ -4926,15 +4926,15 @@ declare module BABYLON {
          */
         constructor(
         /**Name of the animation */
-        name: string, 
+        name: string,
         /**Property to animate */
-        targetProperty: string, 
+        targetProperty: string,
         /**The frames per second of the animation */
-        framePerSecond: number, 
+        framePerSecond: number,
         /**The data type of the animation */
-        dataType: number, 
+        dataType: number,
         /**The loop mode of the animation */
-        loopMode?: number | undefined, 
+        loopMode?: number | undefined,
         /**Specifies if blending should be enabled */
         enableBlending?: boolean | undefined);
         /**
@@ -5510,7 +5510,7 @@ declare module BABYLON {
          */
         constructor(
         /** Defines the number of bounces */
-        bounces?: number, 
+        bounces?: number,
         /** Defines the amplitude of the bounce */
         bounciness?: number);
         /** @hidden */
@@ -5543,7 +5543,7 @@ declare module BABYLON {
          */
         constructor(
         /** Defines the number of oscillations*/
-        oscillations?: number, 
+        oscillations?: number,
         /** Defines the amplitude of the oscillations*/
         springiness?: number);
         /** @hidden */
@@ -5647,11 +5647,11 @@ declare module BABYLON {
          */
         constructor(
         /** Defines the x component of the start tangent in the bezier curve */
-        x1?: number, 
+        x1?: number,
         /** Defines the y component of the start tangent in the bezier curve */
-        y1?: number, 
+        y1?: number,
         /** Defines the x component of the end tangent in the bezier curve */
-        x2?: number, 
+        x2?: number,
         /** Defines the y component of the end tangent in the bezier curve */
         y2?: number);
         /** @hidden */
@@ -6496,7 +6496,7 @@ declare module BABYLON {
          */
         constructor(
         /** defines the skeleton name */
-        name: string, 
+        name: string,
         /** defines the skeleton Id */
         id: string, scene: Scene);
         /**
@@ -8105,13 +8105,13 @@ declare module BABYLON {
          * @param target Define the target of the camera
          * @param scene Define the scene the camera belongs to
          */
-        constructor(name: string, 
+        constructor(name: string,
         /** The longitudinal angle of the camera */
-        alpha: number, 
+        alpha: number,
         /** The latitudinal angle of the camera */
-        beta: number, 
+        beta: number,
         /** The radius of the camera from its target */
-        radius: number, 
+        radius: number,
         /** Define the camera target (the messh it should follow) */
         target: Nullable<AbstractMesh>, scene: Scene);
         private _follow;
@@ -9046,11 +9046,11 @@ declare module BABYLON.Debug {
          */
         constructor(
         /** defines the skeleton to render */
-        skeleton: Skeleton, 
+        skeleton: Skeleton,
         /** defines the mesh attached to the skeleton */
-        mesh: AbstractMesh, scene: Scene, 
+        mesh: AbstractMesh, scene: Scene,
         /** defines a boolean indicating if bones matrices must be forced to update before rendering (true by default)  */
-        autoUpdateBonesMatrices?: boolean, 
+        autoUpdateBonesMatrices?: boolean,
         /** defines the rendering group id to use with the viewer */
         renderingGroupId?: number);
         /** Gets or sets a boolean indicating if the viewer is enabled */
@@ -11755,9 +11755,9 @@ declare module BABYLON {
          */
         constructor(
         /** origin point */
-        origin: Vector3, 
+        origin: Vector3,
         /** direction */
-        direction: Vector3, 
+        direction: Vector3,
         /** length of the ray */
         length?: number);
         /**
@@ -11910,7 +11910,7 @@ declare module BABYLON {
         /**
          * Defines the type of event (BABYLON.KeyboardEventTypes)
          */
-        type: number, 
+        type: number,
         /**
          * Defines the related dom event
          */
@@ -11943,7 +11943,7 @@ declare module BABYLON {
         /**
          * Defines the type of event (BABYLON.KeyboardEventTypes)
          */
-        type: number, 
+        type: number,
         /**
          * Defines the related dom event
          */
@@ -12006,7 +12006,7 @@ declare module BABYLON {
         /**
          * Defines the type of event (BABYLON.PointerEventTypes)
          */
-        type: number, 
+        type: number,
         /**
          * Defines the related dom event
          */
@@ -12053,7 +12053,7 @@ declare module BABYLON {
          * @param event Defines the related dom event
          * @param pickInfo Defines the picking info associated to the info (if any)\
          */
-        constructor(type: number, event: PointerEvent | MouseWheelEvent, 
+        constructor(type: number, event: PointerEvent | MouseWheelEvent,
         /**
          * Defines the picking info associated to the info (if any)\
          */
@@ -12083,7 +12083,7 @@ declare module BABYLON {
         /**
          * The x component of the control stick
          */
-        x: number, 
+        x: number,
         /**
          * The y component of the control stick
          */
@@ -12184,11 +12184,11 @@ declare module BABYLON {
         /**
          * The id of the gamepad
          */
-        id: string, 
+        id: string,
         /**
          * The index of the gamepad
          */
-        index: number, 
+        index: number,
         /**
          * The browser gamepad
          */
@@ -14804,7 +14804,7 @@ declare module BABYLON {
         /**
          * Define the size of the lens flare in the system (a floating value between 0 and 1)
          */
-        size: number, 
+        size: number,
         /**
          * Define the position of the lens flare in the system. (a floating value between -1 and 1). A value of 0 is located on the emitter. A value greater than 0 is beyond the emitter and a value lesser than 0 is behind.
          */
@@ -16095,9 +16095,9 @@ declare module BABYLON {
          */
         constructor(
         /** defines if data length to load can be evaluated */
-        lengthComputable: boolean, 
+        lengthComputable: boolean,
         /** defines the loaded data length */
-        loaded: number, 
+        loaded: number,
         /** defines the data length to load */
         total: number);
         /**
@@ -19809,11 +19809,11 @@ declare module BABYLON {
         /**
          * Defines the red component (between 0 and 1, default is 0)
          */
-        r?: number, 
+        r?: number,
         /**
          * Defines the green component (between 0 and 1, default is 0)
          */
-        g?: number, 
+        g?: number,
         /**
          * Defines the blue component (between 0 and 1, default is 0)
          */
@@ -20115,15 +20115,15 @@ declare module BABYLON {
         /**
          * Defines the red component (between 0 and 1, default is 0)
          */
-        r?: number, 
+        r?: number,
         /**
          * Defines the green component (between 0 and 1, default is 0)
          */
-        g?: number, 
+        g?: number,
         /**
          * Defines the blue component (between 0 and 1, default is 0)
          */
-        b?: number, 
+        b?: number,
         /**
          * Defines the alpha component (between 0 and 1, default is 1)
          */
@@ -20346,7 +20346,7 @@ declare module BABYLON {
          */
         constructor(
         /** defines the first coordinate */
-        x?: number, 
+        x?: number,
         /** defines the second coordinate */
         y?: number);
         /**
@@ -20730,11 +20730,11 @@ declare module BABYLON {
         /**
          * Defines the first coordinates (on X axis)
          */
-        x?: number, 
+        x?: number,
         /**
          * Defines the second coordinates (on Y axis)
          */
-        y?: number, 
+        y?: number,
         /**
          * Defines the third coordinates (on Z axis)
          */
@@ -21379,11 +21379,11 @@ declare module BABYLON {
          */
         constructor(
         /** x value of the vector */
-        x: number, 
+        x: number,
         /** y value of the vector */
-        y: number, 
+        y: number,
         /** z value of the vector */
-        z: number, 
+        z: number,
         /** w value of the vector */
         w: number);
         /**
@@ -21895,11 +21895,11 @@ declare module BABYLON {
          */
         constructor(
         /** defines the first component (0 by default) */
-        x?: number, 
+        x?: number,
         /** defines the second component (0 by default) */
-        y?: number, 
+        y?: number,
         /** defines the third component (0 by default) */
-        z?: number, 
+        z?: number,
         /** defines the fourth component (1.0 by default) */
         w?: number);
         /**
@@ -23051,11 +23051,11 @@ declare module BABYLON {
          */
         constructor(
         /** viewport left coordinate */
-        x: number, 
+        x: number,
         /** viewport top coordinate */
-        y: number, 
+        y: number,
         /**viewport width */
-        width: number, 
+        width: number,
         /** viewport height */
         height: number);
         /**
@@ -23243,9 +23243,9 @@ declare module BABYLON {
          */
         constructor(
         /** Defines the start point of the arc */
-        startPoint: Vector2, 
+        startPoint: Vector2,
         /** Defines the mid point of the arc */
-        midPoint: Vector2, 
+        midPoint: Vector2,
         /** Defines the end point of the arc */
         endPoint: Vector2);
     }
@@ -23460,7 +23460,7 @@ declare module BABYLON {
          */
         constructor(
         /** the position of the vertex (defaut: 0,0,0) */
-        position?: Vector3, 
+        position?: Vector3,
         /** the normal of the vertex (defaut: 0,1,0) */
         normal?: Vector3);
         /**
@@ -23487,9 +23487,9 @@ declare module BABYLON {
          */
         constructor(
         /** the position of the vertex (defaut: 0,0,0) */
-        position?: Vector3, 
+        position?: Vector3,
         /** the normal of the vertex (defaut: 0,1,0) */
-        normal?: Vector3, 
+        normal?: Vector3,
         /** the uv of the vertex (default: 0,0) */
         uv?: Vector2);
         /**
@@ -24945,23 +24945,23 @@ declare module BABYLON {
          * @param mesh defines the hosting mesh (can be null)
          * @param side defines if the created geometry is double sided or not (default is BABYLON.Mesh.DEFAULTSIDE)
          */
-        constructor(id: string, scene: Scene, 
+        constructor(id: string, scene: Scene,
         /**
          * Defines the array of paths to use
          */
-        pathArray: Vector3[][], 
+        pathArray: Vector3[][],
         /**
          * Defines if the last and first points of each path in your pathArray must be joined
          */
-        closeArray: boolean, 
+        closeArray: boolean,
         /**
          * Defines if the last and first points of each path in your pathArray must be joined
          */
-        closePath: boolean, 
+        closePath: boolean,
         /**
          * Defines the offset between points
          */
-        offset: number, canBeRegenerated?: boolean, mesh?: Mesh, 
+        offset: number, canBeRegenerated?: boolean, mesh?: Mesh,
         /**
          * Defines if the created geometry is double sided or not (default is BABYLON.Mesh.DEFAULTSIDE)
          */
@@ -24992,11 +24992,11 @@ declare module BABYLON {
          * @param mesh defines the hosting mesh (can be null)
          * @param side defines if the created geometry is double sided or not (default is BABYLON.Mesh.DEFAULTSIDE)
          */
-        constructor(id: string, scene: Scene, 
+        constructor(id: string, scene: Scene,
         /**
          * Defines the zise of the box (width, height and depth are the same)
          */
-        size: number, canBeRegenerated?: boolean, mesh?: Nullable<Mesh>, 
+        size: number, canBeRegenerated?: boolean, mesh?: Nullable<Mesh>,
         /**
          * Defines if the created geometry is double sided or not (default is BABYLON.Mesh.DEFAULTSIDE)
          */
@@ -25034,15 +25034,15 @@ declare module BABYLON {
          * @param mesh defines the hosting mesh (can be null)
          * @param side defines if the created geometry is double sided or not (default is BABYLON.Mesh.DEFAULTSIDE)
          */
-        constructor(id: string, scene: Scene, 
+        constructor(id: string, scene: Scene,
         /**
          * Defines the number of segments to use to create the sphere
          */
-        segments: number, 
+        segments: number,
         /**
          * Defines the diameter of the sphere
          */
-        diameter: number, canBeRegenerated?: boolean, mesh?: Nullable<Mesh>, 
+        diameter: number, canBeRegenerated?: boolean, mesh?: Nullable<Mesh>,
         /**
          * Defines if the created geometry is double sided or not (default is BABYLON.Mesh.DEFAULTSIDE)
          */
@@ -25080,15 +25080,15 @@ declare module BABYLON {
          * @param mesh defines the hosting mesh (can be null)
          * @param side defines if the created geometry is double sided or not (default is BABYLON.Mesh.DEFAULTSIDE)
          */
-        constructor(id: string, scene: Scene, 
+        constructor(id: string, scene: Scene,
         /**
          * Defines the radius of the disc
          */
-        radius: number, 
+        radius: number,
         /**
          * Defines the tesselation factor to apply to the disc
          */
-        tessellation: number, canBeRegenerated?: boolean, mesh?: Nullable<Mesh>, 
+        tessellation: number, canBeRegenerated?: boolean, mesh?: Nullable<Mesh>,
         /**
          * Defines if the created geometry is double sided or not (default is BABYLON.Mesh.DEFAULTSIDE)
          */
@@ -25139,27 +25139,27 @@ declare module BABYLON {
          * @param mesh defines the hosting mesh (can be null)
          * @param side defines if the created geometry is double sided or not (default is BABYLON.Mesh.DEFAULTSIDE)
          */
-        constructor(id: string, scene: Scene, 
+        constructor(id: string, scene: Scene,
         /**
          * Defines the height of the cylinder
          */
-        height: number, 
+        height: number,
         /**
          * Defines the diameter of the cylinder's top cap
          */
-        diameterTop: number, 
+        diameterTop: number,
         /**
          * Defines the diameter of the cylinder's bottom cap
          */
-        diameterBottom: number, 
+        diameterBottom: number,
         /**
          * Defines the tessellation factor to apply to the cylinder
          */
-        tessellation: number, 
+        tessellation: number,
         /**
          * Defines the number of subdivisions to apply to the cylinder (1 by default)
          */
-        subdivisions?: number, canBeRegenerated?: boolean, mesh?: Nullable<Mesh>, 
+        subdivisions?: number, canBeRegenerated?: boolean, mesh?: Nullable<Mesh>,
         /**
          * Defines if the created geometry is double sided or not (default is BABYLON.Mesh.DEFAULTSIDE)
          */
@@ -25202,19 +25202,19 @@ declare module BABYLON {
          * @param mesh defines the hosting mesh (can be null)
          * @param side defines if the created geometry is double sided or not (default is BABYLON.Mesh.DEFAULTSIDE)
          */
-        constructor(id: string, scene: Scene, 
+        constructor(id: string, scene: Scene,
         /**
          * Defines the diameter of the torus
          */
-        diameter: number, 
+        diameter: number,
         /**
          * Defines the thickness of the torus (ie. internal diameter)
          */
-        thickness: number, 
+        thickness: number,
         /**
          * Defines the tesselation factor to apply to the torus
          */
-        tessellation: number, canBeRegenerated?: boolean, mesh?: Nullable<Mesh>, 
+        tessellation: number, canBeRegenerated?: boolean, mesh?: Nullable<Mesh>,
         /**
          * Defines if the created geometry is double sided or not (default is BABYLON.Mesh.DEFAULTSIDE)
          */
@@ -25252,15 +25252,15 @@ declare module BABYLON {
          * @param canBeRegenerated defines if the geometry supports being regenerated with new parameters (false by default)
          * @param mesh defines the hosting mesh (can be null)
          */
-        constructor(id: string, scene: Scene, 
+        constructor(id: string, scene: Scene,
         /**
          * Defines the width of the ground
          */
-        width: number, 
+        width: number,
         /**
          * Defines the height of the ground
          */
-        height: number, 
+        height: number,
         /**
          * Defines the subdivisions to apply to the ground
          */
@@ -25319,30 +25319,30 @@ declare module BABYLON {
          * @param canBeRegenerated defines if the geometry supports being regenerated with new parameters (false by default)
          * @param mesh defines the hosting mesh (can be null)
          */
-        constructor(id: string, scene: Scene, 
+        constructor(id: string, scene: Scene,
         /**
          * Defines the minimum value on X axis
          */
-        xmin: number, 
+        xmin: number,
         /**
          * Defines the minimum value on Z axis
          */
-        zmin: number, 
+        zmin: number,
         /**
          * Defines the maximum value on X axis
          */
-        xmax: number, 
+        xmax: number,
         /**
          * Defines the maximum value on Z axis
          */
-        zmax: number, 
+        zmax: number,
         /**
          * Defines the subdivisions to apply to the ground
          */
         subdivisions: {
             w: number;
             h: number;
-        }, 
+        },
         /**
          * Defines the precision to use when computing the tiles
          */
@@ -25376,11 +25376,11 @@ declare module BABYLON {
          * @param mesh defines the hosting mesh (can be null)
          * @param side defines if the created geometry is double sided or not (default is BABYLON.Mesh.DEFAULTSIDE)
          */
-        constructor(id: string, scene: Scene, 
+        constructor(id: string, scene: Scene,
         /**
          * Defines the size of the plane (width === height)
          */
-        size: number, canBeRegenerated?: boolean, mesh?: Nullable<Mesh>, 
+        size: number, canBeRegenerated?: boolean, mesh?: Nullable<Mesh>,
         /**
          * Defines if the created geometry is double sided or not (default is BABYLON.Mesh.DEFAULTSIDE)
          */
@@ -25438,31 +25438,31 @@ declare module BABYLON {
          * @param mesh defines the hosting mesh (can be null)
          * @param side defines if the created geometry is double sided or not (default is BABYLON.Mesh.DEFAULTSIDE)
          */
-        constructor(id: string, scene: Scene, 
+        constructor(id: string, scene: Scene,
         /**
          * Defines the radius of the torus knot
          */
-        radius: number, 
+        radius: number,
         /**
          * Defines the thickness of the torus knot tube
          */
-        tube: number, 
+        tube: number,
         /**
          * Defines the number of radial segments
          */
-        radialSegments: number, 
+        radialSegments: number,
         /**
          * Defines the number of tubular segments
          */
-        tubularSegments: number, 
+        tubularSegments: number,
         /**
          * Defines the first number of windings
          */
-        p: number, 
+        p: number,
         /**
          * Defines the second number of windings
          */
-        q: number, canBeRegenerated?: boolean, mesh?: Nullable<Mesh>, 
+        q: number, canBeRegenerated?: boolean, mesh?: Nullable<Mesh>,
         /**
          * Defines if the created geometry is double sided or not (default is BABYLON.Mesh.DEFAULTSIDE)
          */
@@ -25777,11 +25777,11 @@ declare module BABYLON {
          * @param useVertexColor defines if this LinesMesh supports vertex color
          * @param useVertexAlpha defines if this LinesMesh supports vertex alpha
          */
-        constructor(name: string, scene?: Nullable<Scene>, parent?: Nullable<Node>, source?: LinesMesh, doNotCloneChildren?: boolean, 
+        constructor(name: string, scene?: Nullable<Scene>, parent?: Nullable<Node>, source?: LinesMesh, doNotCloneChildren?: boolean,
         /**
          * If vertex color should be applied to the mesh
          */
-        useVertexColor?: boolean | undefined, 
+        useVertexColor?: boolean | undefined,
         /**
          * If vertex alpha should be applied to the mesh
          */
@@ -28186,7 +28186,7 @@ declare module BABYLON {
          */
         constructor(
         /** Defines the distance where this level should star being displayed */
-        distance: number, 
+        distance: number,
         /** Defines the mesh to use to render this level */
         mesh: Nullable<Mesh>);
     }
@@ -28245,9 +28245,9 @@ declare module BABYLON {
          */
         constructor(
         /** expected quality */
-        quality: number, 
+        quality: number,
         /** distance when this optimized version should be used */
-        distance: number, 
+        distance: number,
         /** already optimized mesh  */
         optimizeMesh?: boolean | undefined);
     }
@@ -28541,13 +28541,13 @@ declare module BABYLON {
          */
         constructor(
         /** the material index to use */
-        materialIndex: number, 
+        materialIndex: number,
         /** vertex index start */
-        verticesStart: number, 
+        verticesStart: number,
         /** vertices count */
-        verticesCount: number, 
+        verticesCount: number,
         /** index start */
-        indexStart: number, 
+        indexStart: number,
         /** indices count */
         indexCount: number, mesh: AbstractMesh, renderingMesh?: Mesh, createBoundingBox?: boolean);
         /**
@@ -33040,7 +33040,7 @@ declare module BABYLON {
         /**
          * The physics-enabled object used as the physics imposter
          */
-        object: IPhysicsEnabledObject, 
+        object: IPhysicsEnabledObject,
         /**
          * The type of the physics imposter
          */
@@ -33378,7 +33378,7 @@ declare module BABYLON {
         /**
          * The type of the physics joint
          */
-        type: number, 
+        type: number,
         /**
          * The data for the physics joint
          */
@@ -34647,7 +34647,7 @@ declare module BABYLON {
          * @param textureType Type of textures used when performing the post process. (default: 0)
          * @param blockCompilation If compilation of the shader should not be done in the constructor. The updateEffect method can be used to compile the shader at a later time. (default: false)
          */
-        constructor(name: string, originalFromInput: PostProcess, blurred: PostProcess, 
+        constructor(name: string, originalFromInput: PostProcess, blurred: PostProcess,
         /** Weight of the bloom to be added to the original input. */
         weight: number, options: number | PostProcessOptions, camera: Nullable<Camera>, samplingMode?: number, engine?: Engine, reusable?: boolean, textureType?: number, blockCompilation?: boolean);
     }
@@ -34693,7 +34693,7 @@ declare module BABYLON {
          * @param textureType Type of textures used when performing the post process. (default: 0)
          * @param blockCompilation If compilation of the shader should not be done in the constructor. The updateEffect method can be used to compile the shader at a later time. (default: false)
          */
-        constructor(name: string, 
+        constructor(name: string,
         /** The direction in which to blur the image. */
         direction: Vector2, kernel: number, options: number | PostProcessOptions, camera: Nullable<Camera>, samplingMode?: number, engine?: Engine, reusable?: boolean, textureType?: number, defines?: string, blockCompilation?: boolean);
         /**
@@ -34855,7 +34855,7 @@ declare module BABYLON {
          * @param reusable If the post process can be reused on the same frame. (default: false)
          * @param textureType Type of textures used when performing the post process. (default: 0)
          */
-        constructor(name: string, 
+        constructor(name: string,
         /** Array of 9 values corrisponding to the 3x3 kernel to be applied */
         kernel: number[], options: number | PostProcessOptions, camera: Nullable<Camera>, samplingMode?: number, engine?: Engine, reusable?: boolean, textureType?: number);
         /**
@@ -35105,7 +35105,7 @@ declare module BABYLON {
          * @param engine The engine which the post process will be applied. (default: current engine)
          * @param reusable If the post process can be reused on the same frame. (default: false)
          */
-        constructor(name: string, 
+        constructor(name: string,
         /** The matrix to be applied to the image */
         kernelMatrix: Matrix, options: number | PostProcessOptions, camera: Nullable<Camera>, samplingMode?: number, engine?: Engine, reusable?: boolean);
     }
@@ -35708,11 +35708,11 @@ declare module BABYLON {
          * @param engine The engine which the post process will be applied. (default: current engine)
          * @param reusable If the post process can be reused on the same frame. (default: false)
          */
-        constructor(name: string, refractionTextureUrl: string, 
+        constructor(name: string, refractionTextureUrl: string,
         /** the base color of the refraction (used to taint the rendering) */
-        color: Color3, 
+        color: Color3,
         /** simulated refraction depth */
-        depth: number, 
+        depth: number,
         /** the coefficient of the base color (0 to remove base color tainting) */
         colorLevel: number, options: number | PostProcessOptions, camera: Camera, samplingMode?: number, engine?: Engine, reusable?: boolean);
         /**
@@ -35801,7 +35801,7 @@ declare module BABYLON {
          * @param engine defines the hosting engine (can be ignore if camera is set)
          * @param textureFormat defines the texture format to use (BABYLON.Engine.TEXTURETYPE_UNSIGNED_INT by default)
          */
-        constructor(name: string, _operator: TonemappingOperator, 
+        constructor(name: string, _operator: TonemappingOperator,
         /** Defines the required exposure adjustement */
         exposureAdjustment: number, camera: Camera, samplingMode?: number, engine?: Engine, textureFormat?: number);
     }
@@ -36517,15 +36517,15 @@ declare module BABYLON {
         /**
          * Defines the name of the task
          */
-        name: string, 
+        name: string,
         /**
          * Defines the list of mesh's names you want to load
          */
-        meshesNames: any, 
+        meshesNames: any,
         /**
          * Defines the root url to use as a base to load your meshes and associated resources
          */
-        rootUrl: string, 
+        rootUrl: string,
         /**
          * Defines the filename of the scene to load from
          */
@@ -36571,7 +36571,7 @@ declare module BABYLON {
         /**
          * Defines the name of the task
          */
-        name: string, 
+        name: string,
         /**
          * Defines the location of the file to load
          */
@@ -36617,7 +36617,7 @@ declare module BABYLON {
         /**
          * Defines the name of the task
          */
-        name: string, 
+        name: string,
         /**
          * Defines the location of the file to load
          */
@@ -36663,7 +36663,7 @@ declare module BABYLON {
         /**
          * Defines the name of the task
          */
-        name: string, 
+        name: string,
         /**
          * Defines the location of the image to load
          */
@@ -36733,19 +36733,19 @@ declare module BABYLON {
         /**
          * Defines the name of the task
          */
-        name: string, 
+        name: string,
         /**
          * Defines the location of the file to load
          */
-        url: string, 
+        url: string,
         /**
          * Defines if mipmap should not be generated (default is false)
          */
-        noMipmap?: boolean | undefined, 
+        noMipmap?: boolean | undefined,
         /**
          * Defines if texture must be inverted on Y axis (default is false)
          */
-        invertY?: boolean | undefined, 
+        invertY?: boolean | undefined,
         /**
          * Defines the sampling mode to use (default is BABYLON.Texture.TRILINEAR_SAMPLINGMODE)
          */
@@ -36806,19 +36806,19 @@ declare module BABYLON {
         /**
          * Defines the name of the task
          */
-        name: string, 
+        name: string,
         /**
          * Defines the location of the files to load (You have to specify the folder where the files are + filename with no extension)
          */
-        url: string, 
+        url: string,
         /**
          * Defines the extensions to use to load files (["_px", "_py", "_pz", "_nx", "_ny", "_nz"] by default)
          */
-        extensions?: string[] | undefined, 
+        extensions?: string[] | undefined,
         /**
          * Defines if mipmaps should not be generated (default is false)
          */
-        noMipmap?: boolean | undefined, 
+        noMipmap?: boolean | undefined,
         /**
          * Defines the explicit list of files (undefined by default)
          */
@@ -36889,27 +36889,27 @@ declare module BABYLON {
         /**
          * Defines the name of the task
          */
-        name: string, 
+        name: string,
         /**
          * Defines the location of the file to load
          */
-        url: string, 
+        url: string,
         /**
          * Defines the desired size (the more it increases the longer the generation will be)
          */
-        size: number, 
+        size: number,
         /**
          * Defines if mipmaps should not be generated (default is false)
          */
-        noMipmap?: boolean, 
+        noMipmap?: boolean,
         /**
          * Specifies whether you want to extract the polynomial harmonics during the generation process (default is true)
          */
-        generateHarmonics?: boolean, 
+        generateHarmonics?: boolean,
         /**
          * Specifies if the texture will be use in gamma or linear space (the PBR material requires those texture in linear space, but the standard material would require them in Gamma space) (default is false)
          */
-        gammaSpace?: boolean, 
+        gammaSpace?: boolean,
         /**
          * Internal Use Only
          */
@@ -37609,11 +37609,11 @@ declare module BABYLON {
         /**
          * Defines the callback to call when the observer is notified
          */
-        callback: (eventData: T, eventState: EventState) => void, 
+        callback: (eventData: T, eventState: EventState) => void,
         /**
          * Defines the mask of the observer (used to filter notifications)
          */
-        mask: number, 
+        mask: number,
         /**
          * Defines the current scope used to restore the JS context
          */
@@ -37932,11 +37932,11 @@ declare module BABYLON {
         /**
          * Defines the priority of this optimization (0 by default which means first in the list)
          */
-        priority?: number, 
+        priority?: number,
         /**
          * Defines the maximum sized allowed for textures (1024 is the default value). If a texture is bigger, it will be scaled down using a factor defined by the step parameter
          */
-        maximumSize?: number, 
+        maximumSize?: number,
         /**
          * Defines the factor (0.5 by default) used to scale down textures bigger than maximum sized allowed.
          */
@@ -37983,11 +37983,11 @@ declare module BABYLON {
         /**
          * Defines the priority of this optimization (0 by default which means first in the list)
          */
-        priority?: number, 
+        priority?: number,
         /**
          * Defines the maximum scale to use (2 by default)
          */
-        maximumScale?: number, 
+        maximumScale?: number,
         /**
          * Defines the step to use between two passes (0.5 by default)
          */
@@ -38170,7 +38170,7 @@ declare module BABYLON {
         /**
          * Defines the target frame rate to reach (60 by default)
          */
-        targetFrameRate?: number, 
+        targetFrameRate?: number,
         /**
          * Defines the interval between two checkes (2000ms by default)
          */
@@ -38740,7 +38740,7 @@ declare module BABYLON {
          * @param message defines the message of the error
          * @param request defines the optional XHR request
          */
-        constructor(message: string, 
+        constructor(message: string,
         /** defines the optional XHR request */
         request?: XMLHttpRequest | undefined);
     }
@@ -41630,7 +41630,7 @@ declare module BABYLON {
          * @param scene The scene the VRExperienceHelper belongs to.
          * @param webVROptions Options to modify the vr experience helper's behavior.
          */
-        constructor(scene: Scene, 
+        constructor(scene: Scene,
         /** Options to modify the vr experience helper's behavior. */
         webVROptions?: VRExperienceHelperOptions);
         private _onDefaultMeshLoaded;
@@ -42236,7 +42236,7 @@ declare module BABYLON {
          * @param maxBlockCapacity defines the maximum number of meshes you want on your octree's leaves (default: 64)
          * @param maxDepth defines the maximum depth (sub-levels) for your octree. Default value is 2, which means 8 8 8 = 512 blocks :) (This parameter takes precedence over capacity.)
          */
-        constructor(creationFunc: (entry: T, block: OctreeBlock<T>) => void, maxBlockCapacity?: number, 
+        constructor(creationFunc: (entry: T, block: OctreeBlock<T>) => void, maxBlockCapacity?: number,
         /** Defines the maximum depth (sub-levels) for your octree. Default value is 2, which means 8 8 8 = 512 blocks :) (This parameter takes precedence over capacity.) */
         maxDepth?: number);
         /**
@@ -46290,7 +46290,7 @@ declare module BABYLON {
          * @param samplingMode define the texture sampling mode (Texture.xxx_SAMPLINGMODE)
          * @param type define the format of the data (int, float... Engine.TEXTURETYPE_xxx)
          */
-        constructor(data: ArrayBufferView, width: number, height: number, 
+        constructor(data: ArrayBufferView, width: number, height: number,
         /**
          * Define the format of the data (RGB, RGBA... Engine.TEXTUREFORMAT_xxx)
          */
@@ -46399,7 +46399,7 @@ declare module BABYLON {
          * @param samplingMode defines the sampling mode to use (BABYLON.Texture.TRILINEAR_SAMPLINGMODE by default)
          * @param textureType defines the texture Type (Engine.TEXTURETYPE_UNSIGNED_INT, Engine.TEXTURETYPE_FLOAT...)
          */
-        constructor(data: ArrayBufferView, width: number, height: number, depth: number, 
+        constructor(data: ArrayBufferView, width: number, height: number, depth: number,
         /** Gets or sets the texture format to use */
         format: number, scene: Scene, generateMipMaps?: boolean, invertY?: boolean, samplingMode?: number, textureType?: number);
         /**
@@ -47365,7 +47365,7 @@ declare module BABYLON {
          * @param angles the cone base angle (PI by default)
          * @param directionRandomizer defines how much to randomize the particle direction [0-1] (default is 0)
          */
-        constructor(radius?: number, angle?: number, 
+        constructor(radius?: number, angle?: number,
         /** defines how much to randomize the particle direction [0-1] (default is 0) */
         directionRandomizer?: number);
         /**
@@ -47448,15 +47448,15 @@ declare module BABYLON {
         /**
          * The radius of the emission cylinder.
          */
-        radius?: number, 
+        radius?: number,
         /**
          * The height of the emission cylinder.
          */
-        height?: number, 
+        height?: number,
         /**
          * The range of emission [0-1] 0 Surface only, 1 Entire Radius.
          */
-        radiusRange?: number, 
+        radiusRange?: number,
         /**
          * How much to randomize the particle direction [0-1].
          */
@@ -47527,11 +47527,11 @@ declare module BABYLON {
          * @param direction1 the min limit of the emission direction (up vector by default)
          * @param direction2 the max limit of the emission direction (up vector by default)
          */
-        constructor(radius?: number, height?: number, radiusRange?: number, 
+        constructor(radius?: number, height?: number, radiusRange?: number,
         /**
          * The min limit of the emission direction.
          */
-        direction1?: Vector3, 
+        direction1?: Vector3,
         /**
          * The max limit of the emission direction.
          */
@@ -47604,11 +47604,11 @@ declare module BABYLON {
         /**
          * The radius of the emission hemisphere.
          */
-        radius?: number, 
+        radius?: number,
         /**
          * The range of emission [0-1] 0 Surface only, 1 Entire Radius.
          */
-        radiusRange?: number, 
+        radiusRange?: number,
         /**
          * How much to randomize the particle direction [0-1].
          */
@@ -47806,11 +47806,11 @@ declare module BABYLON {
         /**
          * The radius of the emission sphere.
          */
-        radius?: number, 
+        radius?: number,
         /**
          * The range of emission [0-1] 0 Surface only, 1 Entire Radius.
          */
-        radiusRange?: number, 
+        radiusRange?: number,
         /**
          * How much to randomize the particle direction [0-1].
          */
@@ -47879,11 +47879,11 @@ declare module BABYLON {
          * @param direction1 the min limit of the emission direction (up vector by default)
          * @param direction2 the max limit of the emission direction (up vector by default)
          */
-        constructor(radius?: number, 
+        constructor(radius?: number,
         /**
          * The min limit of the emission direction.
          */
-        direction1?: Vector3, 
+        direction1?: Vector3,
         /**
          * The max limit of the emission direction.
          */
