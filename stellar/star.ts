@@ -10,6 +10,7 @@ class Star {
         private _ui: BABYLON.GUI.AdvancedDynamicTexture,
         private _radius: number,
         public name: string,
+        public mass: number,
         public color: BABYLON.Color3,
     ) {
 
@@ -46,6 +47,7 @@ class Star {
             ui,
             Math.random() * 5 + Math.random() * 5 + 2,
             name,
+            Math.random() * 2 + 1,
             Star.RandomStarColor(),
         )
     }

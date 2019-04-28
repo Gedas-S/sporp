@@ -1,5 +1,5 @@
 class TestSphere {
-    private _phase: number = 0;
+    private _time: number = 0;
     private _sphere: BABYLON.Mesh;
     private _menu: PlanetMenu;
     private _material: BABYLON.StandardMaterial;
@@ -12,7 +12,7 @@ class TestSphere {
         private _ui: BABYLON.GUI.AdvancedDynamicTexture,
         private _radius: number,
         private _speed: number,
-        private _orbitRadius: number,
+        private _orbit: Orbit,
         private _parent: TestSphere = null,
     ) {
         // Create a built-in "sphere" shape; with 16 segments.
@@ -44,7 +44,7 @@ class TestSphere {
 
     fixedUpdate(): void {
         // Update phase.
-        this._phase = (this._phase + this._speed) % 360;
+        this._time += 1;
     }
 
     moveCamera(camera: BABYLON.FreeCamera): void {
@@ -55,17 +55,12 @@ class TestSphere {
      * update mesh position
      */
     private updatePosition(): void {
+        let parentPosition = BABYLON.Vector3.Zero();
         if (this._parent) {
-            var px = this._parent._sphere.position.x
-            var pz = this._parent._sphere.position.z
-        } else {
-            var px = 0
-            var pz = 0
+            parentPosition = this._parent._sphere.position;
         }
-        this._sphere.position.x = Math.cos(this._phase / 180 * Math.PI) * this._orbitRadius + px;
-        this._sphere.position.z = Math.sin(this._phase / 180 * Math.PI) * this._orbitRadius + pz;
+        this._sphere.position = this._orbit.getLocation(this._time).add(parentPosition);
     }
-
 
     private offset() { return this._radius*3; }
     private vec() { return new BABYLON.Vector3(0, this.offset(), -30) }
