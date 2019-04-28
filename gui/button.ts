@@ -1,7 +1,7 @@
 class CameraButton{
     private _button: BABYLON.GUI.Button
     private _scene: BABYLON.Scene
-    constructor(ui: BABYLON.GUI.AdvancedDynamicTexture, scene: BABYLON.Scene){
+    constructor(protected ui: BABYLON.GUI.AdvancedDynamicTexture, scene: BABYLON.Scene){
         this._button  = BABYLON.GUI.Button.CreateSimpleButton('butt', 'Reset Camera');
         this._button.height = 0.1;
         this._button.width = 0.1;
@@ -10,6 +10,8 @@ class CameraButton{
         ui.addControl(this._button);
         this._button.onPointerClickObservable.add(this.change_view.bind(this));
         this._scene = scene;
+        this._button.onPointerEnterObservable.add((function(){this.ui.onGUI = true}).bind(this));
+        this._button.onPointerOutObservable.add((function(){this.ui.onGUI = false}).bind(this));
     }
     change_view(){
         let camera = this._scene.activeCamera as BABYLON.FreeCamera;
