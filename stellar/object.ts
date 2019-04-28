@@ -106,6 +106,10 @@ class TestSphere {
         this._sphere.material = this._material;
     }
 
+    addGrass(): void {
+        this._material.diffuseTexture = new BABYLON.GrassProceduralTexture("Grass", 256, this._scene);
+    }
+
     select(): void {
         this._material.emissiveColor = this._selectedColor;
         this._menu.show();
