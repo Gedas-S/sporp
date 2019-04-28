@@ -7,7 +7,7 @@ class Star extends StellarObject{
 
     constructor(
         public system: StarSystem,
-        private _ui: BABYLON.GUI.AdvancedDynamicTexture,
+        private _ui: GameGUI,
         private _radius: number,
         public name: string,
         public color: BABYLON.Color3,
@@ -41,7 +41,7 @@ class Star extends StellarObject{
         this._scene.onPointerObservable.add(this.click.bind(this), 32);
     }
 
-    static Random(system: StarSystem, ui: BABYLON.GUI.AdvancedDynamicTexture, name: string): Star {
+    static Random(system: StarSystem, ui: GameGUI, name: string): Star {
         return new Star(
             system,
             ui,
@@ -93,7 +93,7 @@ class Star extends StellarObject{
     }
 
     deselect(): void {
-        if ((<any>this._ui).onGUI) {
+        if (this._ui.mouseOnGUI) {
             return;
         }
         this._glow.intensity = 1;

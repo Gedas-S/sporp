@@ -1,5 +1,5 @@
 class StarMenu extends StellarObjectMenu{
-    constructor(ui: BABYLON.GUI.AdvancedDynamicTexture, star: Star) {
+    constructor(ui: GameGUI, star: Star) {
         super(ui, star.name);
 
         let enlargeBtn = BABYLON.GUI.Button.CreateSimpleButton("Enlarge", "Enlarge");

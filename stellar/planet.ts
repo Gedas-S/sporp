@@ -10,7 +10,7 @@ class Planet extends StellarObject {
     constructor(
         // private _scene: BABYLON.Scene,
         public system: StarSystem,
-        private _ui: BABYLON.GUI.AdvancedDynamicTexture,
+        private _ui: GameGUI,
         private _radius: number,
         private _speed: number,
         private _orbitRadius: number,
@@ -113,7 +113,7 @@ class Planet extends StellarObject {
     }
 
     deselect(): void {
-        if ((<any>this._ui).onGUI) {
+        if (this._ui.mouseOnGUI) {
             return;
         }
         this._material.emissiveColor = this._color;

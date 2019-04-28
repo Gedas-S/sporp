@@ -9,7 +9,7 @@ class BaseShip{
     private _target: any = null;
     constructor(
         private _scene: BABYLON.Scene,
-        private _ui: BABYLON.GUI.AdvancedDynamicTexture,
+        private _ui: GameGUI,
         private _size: number,
         private _velocity: BABYLON.Vector3,
         private _position: BABYLON.Vector3,
@@ -81,14 +81,14 @@ class BaseShip{
     target_acquired(): void {
         this._target = this._system.planets[(Math.floor(Math.random() * this._system.planets.length))]
     }
-    
+
     target_lost(): void {
         this._velocity = BABYLON.Vector3.Zero()
     }
 }
 
 class ShipMenu extends StellarObjectMenu {
-    constructor(ui: BABYLON.GUI.AdvancedDynamicTexture, ship: BaseShip) {
+    constructor(ui: GameGUI, ship: BaseShip) {
         super(ui, "Boaty Mc Boat Face");
 
         let setTargetBtn = BABYLON.GUI.Button.CreateSimpleButton("SetTarget", "Set Target");

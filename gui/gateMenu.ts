@@ -1,5 +1,5 @@
 class GateMenu extends StellarObjectMenu{
-    constructor(ui: BABYLON.GUI.AdvancedDynamicTexture, gate: MoleHole) {
+    constructor(ui: GameGUI, gate: MoleHole) {
         super(ui, `Hole to ${gate.system.name}`);
 
         let goToTargetBtn = BABYLON.GUI.Button.CreateSimpleButton("Go to", `Go to ${gate.system.name}`);

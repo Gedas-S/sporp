@@ -1,5 +1,5 @@
 class PlanetMenu extends StellarObjectMenu{
-    constructor(ui: BABYLON.GUI.AdvancedDynamicTexture, planet: Planet) {
+    constructor(ui: GameGUI, planet: Planet) {
         super(ui, "Das PLANETO");
 
         let enlargeBtn = BABYLON.GUI.Button.CreateSimpleButton("Enlarge", "Enlarge");

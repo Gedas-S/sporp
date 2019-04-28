@@ -1,6 +1,6 @@
 class PlanetList {
     constructor(
-        private _ui: BABYLON.GUI.AdvancedDynamicTexture,
+        private _ui: GameGUI,
         private _planets: Planet[]
     ) {
         let height = 50 * _planets.length;
@@ -13,7 +13,7 @@ class PlanetList {
         panel.top = "0%";
         panel.height = height.toString() + "px";
         panel.isVertical = true;
-        
+
         var addButton = function(_index: number) {
             var button = BABYLON.GUI.Button.CreateSimpleButton("planetButton", _index.toString());
             button.height = "50px";
@@ -27,10 +27,10 @@ class PlanetList {
         }
 
         for (let index = 0; index < _planets.length; index++) {
-            addButton(index);            
+            addButton(index);
         }
- 
-        this._ui.addControl(panel);
+
+        this._ui.fullscreenUI.addControl(panel);
 
     }
 

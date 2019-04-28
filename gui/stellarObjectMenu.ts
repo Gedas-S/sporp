@@ -2,7 +2,7 @@ class StellarObjectMenu {
     protected container: BABYLON.GUI.Container;
     public _shown: boolean = false;
 
-    constructor(protected ui: BABYLON.GUI.AdvancedDynamicTexture, name: string) {
+    constructor(protected ui: GameGUI, name: string) {
         this.container = new BABYLON.GUI.Container("StellarObjectMenu");
         this.container.height = "40%";
         this.container.width = "20%";
@@ -27,7 +27,7 @@ class StellarObjectMenu {
             return;
         }
         this._shown = true;
-        this.ui.addControl(this.container);
+        this.ui.fullscreenUI.addControl(this.container);
     }
 
     hide(): void {
@@ -35,6 +35,6 @@ class StellarObjectMenu {
             return;
         }
         this._shown = false;
-        this.ui.removeControl(this.container);
+        this.ui.fullscreenUI.removeControl(this.container);
     }
 }

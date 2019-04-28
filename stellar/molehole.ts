@@ -4,7 +4,7 @@ class MoleHole extends StellarObject {
     private _menu: GateMenu;
 
     constructor(
-        public ui: BABYLON.GUI.AdvancedDynamicTexture,
+        public ui: GameGUI,
         public system: StarSystem,
         public targetSystem: StarSystem,
         position: BABYLON.Vector3,
@@ -66,7 +66,7 @@ class MoleHole extends StellarObject {
     }
 
     deselect(): void {
-        if ((<any>this.ui).onGUI) {
+        if (this.ui.mouseOnGUI) {
             return;
         }
         this._menu.hide();
