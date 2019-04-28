@@ -1,17 +1,17 @@
-class MoleHole implements StellarObject {
+class MoleHole extends StellarObject {
     private _particleSystem: BABYLON.ParticleSystem;
 
     constructor(
-        public scene: BABYLON.Scene,
         public ui: BABYLON.GUI.AdvancedDynamicTexture,
         public system: StarSystem,
         public targetSystem: StarSystem,
         position: BABYLON.Vector3,
         color: BABYLON.Color3 = undefined,
     ){
-        this._particleSystem = new BABYLON.ParticleSystem("MoleHole", 1000, scene);
+        super()
+        this._particleSystem = new BABYLON.ParticleSystem("MoleHole", 1000, this._scene);
         this._particleSystem.createPointEmitter(new BABYLON.Vector3(1, 1, 1), new BABYLON.Vector3(-1, -1, -1));
-        this._particleSystem.particleTexture = new BABYLON.Texture("textures/circle.png", scene);
+        this._particleSystem.particleTexture = new BABYLON.Texture("textures/circle.png", this._scene);
         this._particleSystem.emitter = position;
         this._particleSystem.minLifeTime = 0.5;
         this._particleSystem.maxLifeTime = 0.5;

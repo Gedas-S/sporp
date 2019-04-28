@@ -1,4 +1,4 @@
-class Star implements StellarObject{
+class Star extends StellarObject{
     private _sphere: BABYLON.Mesh;
     private _menu: StarMenu;
     private _material: BABYLON.StandardMaterial;
@@ -6,12 +6,13 @@ class Star implements StellarObject{
     private _light: BABYLON.PointLight;
 
     constructor(
-        private _scene: BABYLON.Scene,
+        public system: StarSystem,
         private _ui: BABYLON.GUI.AdvancedDynamicTexture,
         private _radius: number,
         public name: string,
         public color: BABYLON.Color3,
     ) {
+        super();
 
         // Create a built-in "sphere" shape; with 16 segments.
         this._sphere = BABYLON.MeshBuilder.CreateSphere(
@@ -21,7 +22,7 @@ class Star implements StellarObject{
         );
 
         this._material = new BABYLON.StandardMaterial("PlanetMaterial", this._scene);
-        var texture = new BABYLON.FireProceduralTexture("texture", 1024, _scene);
+        var texture = new BABYLON.FireProceduralTexture("texture", 1024, this._scene);
         texture.speed = new BABYLON.Vector2(0.02, 0.02);
         this._material.diffuseTexture = texture;
         this._material.emissiveTexture = texture;
@@ -40,9 +41,9 @@ class Star implements StellarObject{
         this._scene.onPointerObservable.add(this.click.bind(this), 32);
     }
 
-    static Random(scene: BABYLON.Scene, ui: BABYLON.GUI.AdvancedDynamicTexture, name: string): Star {
+    static Random(system: StarSystem, ui: BABYLON.GUI.AdvancedDynamicTexture, name: string): Star {
         return new Star(
-            scene,
+            system,
             ui,
             Math.random() * 5 + Math.random() * 5 + 2,
             name,

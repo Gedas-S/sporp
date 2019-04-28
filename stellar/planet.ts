@@ -1,4 +1,4 @@
-class Planet implements StellarObject {
+class Planet extends StellarObject {
     private _phase: number = 0;
     private _sphere: BABYLON.Mesh;
     private _menu: PlanetMenu;
@@ -8,13 +8,15 @@ class Planet implements StellarObject {
     public position: BABYLON.Vector3;
 
     constructor(
-        private _scene: BABYLON.Scene,
+        // private _scene: BABYLON.Scene,
+        public system: StarSystem,
         private _ui: BABYLON.GUI.AdvancedDynamicTexture,
         private _radius: number,
         private _speed: number,
         private _orbitRadius: number,
         private _parent: StellarObject,
     ) {
+        super();
         // Create a built-in "sphere" shape; with 16 segments.
         this._sphere = BABYLON.MeshBuilder.CreateSphere(
             'sphere',
@@ -23,7 +25,7 @@ class Planet implements StellarObject {
         );
 
         this._material = new BABYLON.StandardMaterial("PlanetMaterial", this._scene);
-        var texture = new BABYLON.CloudProceduralTexture("texture", 1024, _scene);
+        var texture = new BABYLON.CloudProceduralTexture("texture", 1024, this._scene);
         texture.cloudColor = BABYLON.Color4.FromColor3(BABYLON.Color3.Random());
         texture.skyColor = BABYLON.Color4.FromColor3(BABYLON.Color3.Random());
 
@@ -41,6 +43,8 @@ class Planet implements StellarObject {
         // Bind click function (mask 32 is click).
         this._scene.onPointerObservable.add(this.click.bind(this), 32);
     }
+
+
 
     fixedUpdate(): void {
         // Update phase.
@@ -95,11 +99,15 @@ class Planet implements StellarObject {
         this._material.diffuseTexture = new BABYLON.GrassProceduralTexture("Grass", 256, this._scene);
     }
 
+    private lookAtMe(): void {
+        (this._scene.activeCamera as BABYLON.TargetCamera).lockedTarget = this._sphere;
+    }
+
     select(): void {
         this._material.emissiveColor = this._selectedColor;
         this._menu.show();
 
-        (this._scene.activeCamera as BABYLON.TargetCamera).lockedTarget = this._sphere;
+        let q = (this._scene.onBeforeRenderObservable.add(this.lookAtMe.bind(this)))
     }
 
     deselect(): void {

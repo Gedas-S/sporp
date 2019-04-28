@@ -18,5 +18,6 @@ class CameraButton{
         camera.position = new BABYLON.Vector3(0, 15, -40);
         camera.setTarget(BABYLON.Vector3.Zero());
         camera.lockedTarget = null;
+        this._scene.activeCamera = camera;
     }
 }
