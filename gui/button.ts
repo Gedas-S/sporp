@@ -10,8 +10,8 @@ class CameraButton{
         ui.addControl(this._button);
         this._button.onPointerClickObservable.add(this.change_view.bind(this));
         this._scene = scene;
-        this._button.onPointerEnterObservable.add((function(){this.ui.onGUI = true}).bind(this));
-        this._button.onPointerOutObservable.add((function(){this.ui.onGUI = false}).bind(this));
+        this._button.onPointerEnterObservable.add(function(){(<any>ui).onGUI = true});
+        this._button.onPointerOutObservable.add(function(){(<any>ui).onGUI = false});
     }
     change_view(){
         let camera = this._scene.activeCamera as BABYLON.FreeCamera;
