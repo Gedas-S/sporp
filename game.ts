@@ -46,12 +46,3 @@ window.addEventListener('DOMContentLoaded', () => {
     // Start render loop.
     game.doRender();
 });
-
-window.addEventListener("keydown", (e: KeyboardEvent) => {
-    switch(e.keyCode){
-        case 87: 
-            //TODO: select Vytenis ship
-            break;
-    }
-    return true;
-});

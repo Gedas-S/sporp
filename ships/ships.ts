@@ -31,6 +31,8 @@ class BaseShip{
         this._scene.onPointerObservable.add(this.click.bind(this), 32);
 
         this._menu = new ShipMenu(this._ui, this);
+
+        this._ui.onKeyDownObservable.add(this.select.bind(this));
     }
     fixedUpdate(): void {
         // Update phase.
