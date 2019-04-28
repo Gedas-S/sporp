@@ -1,7 +1,7 @@
 class MoleHole extends StellarObject {
     private _particleSystem: BABYLON.ParticleSystem;
     private _selectorMesh: BABYLON.Mesh;
-    private _menu: PlanetMenu;
+    private _menu: GateMenu;
 
     constructor(
         public ui: BABYLON.GUI.AdvancedDynamicTexture,
