@@ -1,6 +1,7 @@
 class StarSystem {
     public stars: Star[] = [];
     public planets: Planet[] = [];
+    public holes: MoleHole[] = [];
 
     constructor(public scene: BABYLON.Scene, public ui: BABYLON.GUI.AdvancedDynamicTexture){
         // Create a test star
@@ -10,5 +11,6 @@ class StarSystem {
         this.planets.push(new Planet(this.scene, this.ui, 1, 3, 16, this.stars[0]));
         this.planets.push(new Planet(this.scene, this.ui, 1.5, 0, 0, this.stars[0]));
         this.planets.push(new Planet(this.scene, this.ui, 2, 0.2, 3, this.planets[0]));
+        this.holes.push(new MoleHole(this.scene, this.ui, this, this, new BABYLON.Vector3(25, 0, 12)));
     }
 }
