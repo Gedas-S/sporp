@@ -16,8 +16,8 @@ class BaseShip{
         private _system: StarSystem,
     ){
         this._body = BABYLON.MeshBuilder.CreateBox('body', {size: _size}, this._scene);
-
-        this._body.position = _position;
+        this._position = _position;
+        this._body.position = this._body.position;
 
         this._material = new BABYLON.StandardMaterial("ShipMaterial", this._scene);
         this._body.material = this._material
@@ -35,11 +35,11 @@ class BaseShip{
     fixedUpdate(): void {
         // Update phase.
         if (this._target) {
-            this._velocity = this._target.position.subtract(this._body.position)
-            console.log(this._velocity)
+            this._velocity = this._target.position.subtract(this._body.position);
             if (this._velocity.length() > this._maxSpeed) {
-                this._velocity = this._velocity.scale(this._maxSpeed / this._velocity.length())
+                this._velocity = this._velocity.scale(this._maxSpeed / this._velocity.length());
         } else {this._velocity = BABYLON.Vector3.Zero()}
+        this._position.addInPlace(this._velocity);
         // rotate function
         // let matrix = new BABYLON.Matrix();
         // BABYLON.Quaternion.RotationAxis(new BABYLON.Vector3(0, 1, 0), Math.PI / 180).toRotationMatrix(matrix);
@@ -48,7 +48,7 @@ class BaseShip{
         }
     }
     private updatePosition(): void {
-        this._body.position.addInPlace(this._velocity);
+        this._body.position = this._position;
     }
 
     update(): void {
