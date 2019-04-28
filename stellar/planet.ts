@@ -5,7 +5,6 @@ class Planet implements StellarObject {
     private _material: BABYLON.StandardMaterial;
     private _color: BABYLON.Color3 = BABYLON.Color3.Random();
     private _selectedColor: BABYLON.Color3 = BABYLON.Color3.Red();
-    private _camera: BABYLON.FreeCamera;
     public position: BABYLON.Vector3;
 
     constructor(
@@ -68,16 +67,8 @@ class Planet implements StellarObject {
         // Get delta time. We don't need it, only for reference. :P
         let deltaTime = this._scene.getEngine().getDeltaTime();
 
-        let oldPos = this._sphere.position;
-
         this.updatePosition();
 
-        let flightDirection = this._sphere.position.add(oldPos).normalize();
-
-        if (this._camera != null)
-         {
-             this._camera.position =  oldPos.add(this.vec());
-         }
     }
 
 
