@@ -1,6 +1,8 @@
 class GameGUI {
     private _uiScene: BABYLON.Scene;
     private _camera: BABYLON.FreeCamera;
+    private _cameraScript: Function;
+    private _cameraScriptClear: Function;
     public mouseOnGUI: boolean = false;
     public fullscreenUI: BABYLON.GUI.AdvancedDynamicTexture;
     public onKeyDownObservable: BABYLON.Observable<any>;
@@ -19,9 +21,23 @@ class GameGUI {
         window.addEventListener("keydown", (e: KeyboardEvent) => {
             this.onKeyDownObservable.notifyObservers(e.keyCode);
         });
+
+        this._uiScene.onBeforeRenderObservable.add(()=>{
+            if (this._cameraScript){
+                this._cameraScript();
+            }
+        })
     }
 
     render():void {
         this._uiScene.render();
+    }
+
+    setCameraScript(script: Function, clearScript?: Function) {
+        if (this._cameraScript && this._cameraScriptClear){
+            this._cameraScriptClear();
+        }
+        this._cameraScript = script;
+        this._cameraScriptClear = clearScript;
     }
 }

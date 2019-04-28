@@ -100,17 +100,18 @@ class Planet extends StellarObject {
         this._material.diffuseTexture = new BABYLON.GrassProceduralTexture("Grass", 256, this._scene);
     }
 
-    private lookAtMe(): void {
-        (this._scene.activeCamera as BABYLON.TargetCamera).lockedTarget = this._sphere;
-    }
-
     select(): void {
         this._material.emissiveColor = this._selectedColor;
         this._menu.show();
-        this._scene.onBeforeRenderObservable.remove(this.system.followControl)
 
-        let observeThisPlanet = (this._scene.onBeforeRenderObservable.add(this.lookAtMe.bind(this)))
-        this.system.followControl = observeThisPlanet;
+        this._ui.setCameraScript(()=>{
+            (this._scene.activeCamera as BABYLON.TargetCamera).lockedTarget = this._sphere;
+        }, ()=>{
+            let camera = this._scene.activeCamera as BABYLON.TargetCamera;
+            camera.position = new BABYLON.Vector3(0, 15, -40);
+            camera.setTarget(BABYLON.Vector3.Zero());
+            camera.lockedTarget = null;
+        });
     }
 
     deselect(): void {
