@@ -30,8 +30,9 @@ class BaseShip{
     fixedUpdate(): void {
         // Update phase.
         this._velocity.addInPlace(this._acceleration);
-        let quart = BABYLON.Quaternion.RotationAxis(new BABYLON.Vector3(0, 1, 0), Math.PI / 180)
-        this._velocity.rotateByQuaternionToRef(quart, this._velocity)
+        let matrix = new BABYLON.Matrix();
+        BABYLON.Quaternion.RotationAxis(new BABYLON.Vector3(0, 1, 0), Math.PI / 180).toRotationMatrix(matrix);
+        BABYLON.Vector3.TransformCoordinatesToRef(this._velocity, matrix, this._velocity);
     }
     private updatePosition(): void {
         this._body.position.addInPlace(this._velocity);
