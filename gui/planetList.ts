@@ -1,37 +1,42 @@
 class PlanetList {
+    private panel: BABYLON.GUI.StackPanel;
+    private _planets: Planet[];
+
     constructor(
-        private _ui: GameGUI,
-        private _planets: Planet[]
+        private _system: StarSystem,
     ) {
-        let height = 50 * _planets.length;
+        this.panel = new BABYLON.GUI.StackPanel();
+        this.panel.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+        this.panel.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        this.panel.left = "0%";
+        this.panel.width = "10%";
+        this.panel.top = "0%";
+        this.panel.isVertical = true;
 
-        let panel = new BABYLON.GUI.StackPanel();
-        panel.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-        panel.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
-        panel.left = "0%";
-        panel.width = "10%";
-        panel.top = "0%";
-        panel.height = height.toString() + "px";
-        panel.isVertical = true;
+        this._system.uiControls.push(this.panel);
+        this._system.scene.onBeforeRenderObservable.add(this.update.bind(this));
+    }
 
-        var addButton = function(_index: number) {
-            var button = BABYLON.GUI.Button.CreateSimpleButton("planetButton", _index.toString());
-            button.height = "50px";
-            button.width = 1;
-            button.background = BABYLON.Color3.Random().toHexString();
-
-            panel.addControl(button);
-            button.onPointerUpObservable.add(function() {
-                _planets[_index].select();
-            })
+    private update(): void {
+        if (this._planets == this._system.planets) return;
+        this._planets = this._system.planets;
+        this.panel.clearControls();
+        this.panel.height = (50 * this._system.planets.length).toString() + "px";
+        for (let [index, planet] of this._system.planets.entries()) {
+            this.addButton(index, planet);
         }
+    }
 
-        for (let index = 0; index < _planets.length; index++) {
-            addButton(index);
-        }
+    private addButton(index: number, planet: Planet): void {
+        var button = BABYLON.GUI.Button.CreateSimpleButton("planetButton", index.toString());
+        button.height = "50px";
+        button.width = 1;
+        button.background = BABYLON.Color3.Random().toHexString();
 
-        this._ui.fullscreenUI.addControl(panel);
-
+        this.panel.addControl(button);
+        button.onPointerUpObservable.add(function() {
+            planet.select();
+        })
     }
 
 }

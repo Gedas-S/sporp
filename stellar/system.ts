@@ -18,7 +18,7 @@ class StarSystem {
         (this.scene.activeCamera as BABYLON.FreeCamera).setTarget(BABYLON.Vector3.Zero());
         this.scene.enablePhysics(new BABYLON.Vector3(0, 0, 0), _game.physicsEngine);
 
-        this._planetList = new PlanetList(this.ui, this.planets);
+        this._planetList = new PlanetList(this);
     }
 
     goto(): void {
@@ -34,8 +34,6 @@ class StarSystem {
         testSystem.planets.push(new Planet(testSystem, ui, 1, 3, 16, testSystem.stars[0]));
         testSystem.planets.push(new Planet(testSystem, ui, 1.5, 0, 0, testSystem.stars[0]));
         testSystem.planets.push(new Planet(testSystem, ui, 2, 0.2, 3, testSystem.planets[0]));
-
-        testSystem._planetList = new PlanetList(ui, testSystem.planets);
 
         let ship1 = new BaseShip(
             testSystem,
