@@ -8,30 +8,27 @@ class BaseShip{
     private _menu: ShipMenu;
     private _target: any = null;
     constructor(
-        private _scene: BABYLON.Scene,
-        private _ui: GameGUI,
+        private _system: StarSystem,
         private _size: number,
         private _velocity: BABYLON.Vector3,
         private _position: BABYLON.Vector3,
-        private _system: StarSystem,
     ){
-        this._body = BABYLON.MeshBuilder.CreateBox('body', {size: _size}, this._scene);
+        this._body = BABYLON.MeshBuilder.CreateBox('body', {size: _size}, this._system.scene);
         this._position = _position;
         this._body.position = this._body.position;
 
-        this._material = new BABYLON.StandardMaterial("ShipMaterial", this._scene);
+        this._material = new BABYLON.StandardMaterial("ShipMaterial", this._system.scene);
         this._body.material = this._material
         this._material.emissiveColor = this._color;
 
         // Bind fixedUpdate to be called every physics tick
-        this._scene.onBeforeStepObservable.add(this.fixedUpdate.bind(this));
+        this._system.scene.onBeforeStepObservable.add(this.fixedUpdate.bind(this));
         // Bind update to be called every frame
-        this._scene.onBeforeRenderObservable.add(this.update.bind(this));
+        this._system.scene.onBeforeRenderObservable.add(this.update.bind(this));
         // Bind click function (mask 32 is click).
-        this._scene.onPointerObservable.add(this.click.bind(this), 32);
+        this._system.scene.onPointerObservable.add(this.click.bind(this), 32);
 
-        this._menu = new ShipMenu(this._ui, this);
-
+        this._menu = new ShipMenu(this._system.ui, this);
         this._ui.onKeyDownObservable.add(this.select.bind(this));
     }
     fixedUpdate(): void {
@@ -72,7 +69,7 @@ class BaseShip{
     }
 
     deselect(): void {
-        if ((<any>this._ui).onGUI) {
+        if ((<any>this._system.ui).onGUI) {
             return;
         }
         this._selected = false;

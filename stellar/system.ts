@@ -25,9 +25,8 @@ class StarSystem {
         this._planetList = new PlanetList(this.ui, this.planets);
 
         let ship1 = new BaseShip(
-            this.scene, this.ui,
-            2, new BABYLON.Vector3(0, 0, 0), new BABYLON.Vector3(-10, -1, 1),
-            this
+            this,
+            2, new BABYLON.Vector3(0, 0, 0), new BABYLON.Vector3(-10, -1, 1)
         )
 
         let button = new CameraButton(this.ui, this.scene, this);
