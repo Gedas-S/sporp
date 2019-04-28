@@ -1,4 +1,4 @@
-class TestSphere {
+class Planet implements StellarObject {
     private _phase: number = 0;
     private _sphere: BABYLON.Mesh;
     private _menu: PlanetMenu;
@@ -6,6 +6,7 @@ class TestSphere {
     private _color: BABYLON.Color3 = BABYLON.Color3.Random();
     private _selectedColor: BABYLON.Color3 = BABYLON.Color3.Red();
     private _camera: BABYLON.FreeCamera;
+    public position: BABYLON.Vector3;
 
     constructor(
         private _scene: BABYLON.Scene,
@@ -13,7 +14,7 @@ class TestSphere {
         private _radius: number,
         private _speed: number,
         private _orbitRadius: number,
-        private _parent: TestSphere = null,
+        private _parent: StellarObject,
     ) {
         // Create a built-in "sphere" shape; with 16 segments.
         this._sphere = BABYLON.MeshBuilder.CreateSphere(
@@ -28,9 +29,9 @@ class TestSphere {
         texture.skyColor = BABYLON.Color4.FromColor3(BABYLON.Color3.Random());
 
         this._material.diffuseTexture = texture;
-
         this._sphere.material = this._material;
         this._material.emissiveColor = this._color;
+        this.updatePosition();
 
         this._menu = new PlanetMenu(this._ui, this);
 
@@ -55,15 +56,12 @@ class TestSphere {
      * update mesh position
      */
     private updatePosition(): void {
-        if (this._parent) {
-            var px = this._parent._sphere.position.x
-            var pz = this._parent._sphere.position.z
-        } else {
-            var px = 0
-            var pz = 0
-        }
-        this._sphere.position.x = Math.cos(this._phase / 180 * Math.PI) * this._orbitRadius + px;
-        this._sphere.position.z = Math.sin(this._phase / 180 * Math.PI) * this._orbitRadius + pz;
+        this.position = (new BABYLON.Vector3(
+            Math.cos(this._phase / 180 * Math.PI) * this._orbitRadius,
+            0,
+            Math.sin(this._phase / 180 * Math.PI) * this._orbitRadius,
+        )).add(this._parent.position);
+        this._sphere.position = this.position;
     }
 
 

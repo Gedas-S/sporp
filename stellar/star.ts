@@ -1,4 +1,4 @@
-class Star {
+class Star implements StellarObject{
     private _sphere: BABYLON.Mesh;
     private _menu: StarMenu;
     private _material: BABYLON.StandardMaterial;
@@ -61,6 +61,10 @@ class Star {
         } else if (this._menu) {
             this.deselect();
         }
+    }
+
+    get position(): BABYLON.Vector3 {
+        return BABYLON.Vector3.Zero();
     }
 
     enlarge(): void {
