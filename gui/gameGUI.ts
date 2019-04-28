@@ -36,10 +36,13 @@ class GameGUI {
     }
 
     setCameraScript(script: Function, clearScript?: Function) {
-        if (this._cameraScript && this._cameraScriptClear){
+        if (this._cameraScriptClear){
             this._cameraScriptClear();
         }
         this._cameraScript = script;
         this._cameraScriptClear = clearScript;
+        if (script){
+            script();
+        }
     }
 }
