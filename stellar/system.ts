@@ -1,5 +1,6 @@
 class StarSystem {
     public scene: BABYLON.Scene;
+    public uiControls: BABYLON.GUI.Container[] = [];
 
     public stars: Star[] = [];
     public planets: Planet[] = [];

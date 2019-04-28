@@ -31,16 +31,25 @@ class StarMap {
         system.scene.activeCamera.attachControl(this._game.canvas, false);
         system.scene.onPointerObservable.add(
             (eventData: BABYLON.PointerInfo) => {
-                system.onClickObservable.notifyObservers(eventData)
-            // Bind click function (mask 32 is click).
-            }, 32
+                if (!this._game.gameGUI.mouseOnGUI){
+                    system.onClickObservable.notifyObservers(eventData)
+                }
+            }, 32   // (mask 32 is click).
         );
+        for (let control of system.uiControls) {
+            this._game.gameGUI.fullscreenUI.addControl(control);
+        }
         this._activeSystem = system;
     }
 
     deactivateSystem(): void{
         this._activeSystem.scene.activeCamera.detachControl(this._game.canvas);
         this._activeSystem.scene.onPointerObservable.clear();
+        for (let control of this._activeSystem.uiControls) {
+            this._game.gameGUI.fullscreenUI.removeControl(control);
+            control.isVisible = false;
+        }
+        this._game.gameGUI.setCameraScript(undefined);
         this._activeSystem = null;
     }
 }

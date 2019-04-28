@@ -35,6 +35,7 @@ class MoleHole extends StellarObject {
         this._selectorMesh.material.alpha = 0;
 
         this._menu = new GateMenu(ui, this);
+        system.uiControls.push(this._menu.container);
 
         this.system.holes.push(this);
 
@@ -68,9 +69,6 @@ class MoleHole extends StellarObject {
     }
 
     deselect(): void {
-        if (this.ui.mouseOnGUI) {
-            return;
-        }
         this._menu.hide();
     }
 

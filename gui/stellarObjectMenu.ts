@@ -1,5 +1,5 @@
 class GUIContainer {
-    protected container: BABYLON.GUI.Container;
+    public container: BABYLON.GUI.Container;
 
     constructor(protected ui: GameGUI){
         this.container = new BABYLON.GUI.Container("GUIContainer");
@@ -10,10 +10,9 @@ class GUIContainer {
 }
 
 class StellarObjectMenu extends GUIContainer{
-    public _shown: boolean = false;
-
     constructor(ui: GameGUI, name: string) {
         super(ui);
+        this.container.isVisible = false;
         this.container.height = "40%";
         this.container.width = "20%";
         this.container.background = "#222222";
@@ -30,18 +29,10 @@ class StellarObjectMenu extends GUIContainer{
     }
 
     show(): void {
-        if (this._shown) {
-            return;
-        }
-        this._shown = true;
-        this.ui.fullscreenUI.addControl(this.container);
+        this.container.isVisible = true;
     }
 
     hide(): void {
-        if (!this._shown) {
-            return;
-        }
-        this._shown = false;
-        this.ui.fullscreenUI.removeControl(this.container);
+        this.container.isVisible = false;
     }
 }

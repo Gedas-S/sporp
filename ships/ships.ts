@@ -29,6 +29,8 @@ class BaseShip{
         this._system.onClickObservable.add(this.click.bind(this));
 
         this._menu = new ShipMenu(this._system.ui, this);
+        this._system.uiControls.push(this._menu.container);
+
         this._system.ui.onKeyDownObservable.add((eventKey)=>{
             if (eventKey == 87)
             {
@@ -74,9 +76,6 @@ class BaseShip{
     }
 
     deselect(): void {
-        if (this._system.ui.mouseOnGUI) {
-            return;
-        }
         this._selected = false;
         this._menu.hide()
         this._material.emissiveColor = this._color;

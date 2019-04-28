@@ -35,9 +35,10 @@ class Star extends StellarObject{
         this._glow = new BABYLON.GlowLayer("SunGlow", system.scene);
 
         this._menu = new StarMenu(this._ui, this);
+        system.uiControls.push(this._menu.container);
 
         // Bind click function.
-        system.onClickObservable.add(this.click.bind(this), 32);
+        system.onClickObservable.add(this.click.bind(this));
     }
 
     static Random(system: StarSystem, ui: GameGUI, name: string): Star {
@@ -92,9 +93,6 @@ class Star extends StellarObject{
     }
 
     deselect(): void {
-        if (this._ui.mouseOnGUI) {
-            return;
-        }
         this._glow.intensity = 1;
         this._menu.hide();
     }

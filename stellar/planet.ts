@@ -36,6 +36,7 @@ class Planet extends StellarObject {
         this.updatePosition();
 
         this._menu = new PlanetMenu(this._ui, this);
+        system.uiControls.push(this._menu.container);
 
         // Bind fixedUpdate to be called every physics tick
         this._scene.onBeforeStepObservable.add(this.fixedUpdate.bind(this));
@@ -79,7 +80,7 @@ class Planet extends StellarObject {
     click(eventData: BABYLON.PointerInfo): void {
         if (eventData.pickInfo.pickedMesh == this._sphere) {
             this.select();
-        } else if (this._menu._shown) {
+        } else {
             this.deselect();
         }
     }
@@ -114,9 +115,6 @@ class Planet extends StellarObject {
     }
 
     deselect(): void {
-        if (this._ui.mouseOnGUI) {
-            return;
-        }
         this._material.emissiveColor = this._emissive;
         this._menu.hide();
     }
