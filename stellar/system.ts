@@ -16,8 +16,6 @@ class StarSystem {
         this.scene.enablePhysics(new BABYLON.Vector3(0, 0, 0), _game.physicsEngine);
 
         this._planetList = new PlanetList(this.ui, this.planets);
-
-        let button = new CameraButton(this.ui, this.scene, this);
     }
 
     goto(): void {

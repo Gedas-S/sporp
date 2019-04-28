@@ -16,6 +16,8 @@ class GameGUI {
         this._camera.setTarget(BABYLON.Vector3.Zero());
         this.fullscreenUI = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mainUI", true, this._uiScene);
 
+        new CameraButton(this);
+
         this.onKeyDownObservable = new BABYLON.Observable();
 
         window.addEventListener("keydown", (e: KeyboardEvent) => {
