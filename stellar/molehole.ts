@@ -4,13 +4,13 @@ class MoleHole extends StellarObject {
     private _menu: GateMenu;
 
     constructor(
-        public ui: GameGUI,
-        public system: StarSystem,
+        system: StarSystem,
         public targetSystem: StarSystem,
+        public ui: GameGUI,
         position: BABYLON.Vector3,
         color: BABYLON.Color3 = undefined,
     ){
-        super()
+        super(system)
         this._particleSystem = new BABYLON.ParticleSystem("MoleHole", 1000, this._scene);
         this._particleSystem.createPointEmitter(new BABYLON.Vector3(1, 1, 1), new BABYLON.Vector3(-1, -1, -1));
         this._particleSystem.particleTexture = new BABYLON.Texture("textures/circle.png", this._scene);
@@ -35,6 +35,8 @@ class MoleHole extends StellarObject {
         this._selectorMesh.material.alpha = 0;
 
         this._menu = new GateMenu(ui, this);
+
+        this.system.holes.push(this);
 
         // Bind click function (mask 32 is click).
         this.system.scene.onPointerObservable.add(this.click.bind(this), 32);

@@ -16,7 +16,7 @@ class Planet extends StellarObject {
         private _orbitRadius: number,
         private _parent: StellarObject,
     ) {
-        super();
+        super(system);
         // Create a built-in "sphere" shape; with 16 segments.
         this._sphere = BABYLON.MeshBuilder.CreateSphere(
             'sphere',

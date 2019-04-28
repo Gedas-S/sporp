@@ -3,7 +3,13 @@ class StarMap {
     private _activeSystem: StarSystem = null;
 
     constructor(private _game: Game){
-        this.Systems.push(new StarSystem(this._game, this._game.gameGUI, "Systemo uno"));
+        this.Systems.push(StarSystem.TestSystem(this._game, this, this._game.gameGUI, "Systemo uno"));
+        this.Systems.push(new StarSystem(this._game, this, this._game.gameGUI, "Systemo duo"));
+
+        new MoleHole(this.Systems[0], this.Systems[1], _game.gameGUI, new BABYLON.Vector3(25, 0, 12));
+        this.Systems[1].stars.push(Star.Random(this.Systems[1], _game.gameGUI, "Starus secundus"));
+        new MoleHole(this.Systems[1], this.Systems[0], _game.gameGUI, new BABYLON.Vector3(-25, 0, 12));
+
         this.activateSystem(this.Systems[0]);
     }
 

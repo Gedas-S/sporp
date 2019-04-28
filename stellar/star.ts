@@ -6,13 +6,13 @@ class Star extends StellarObject{
     private _light: BABYLON.PointLight;
 
     constructor(
-        public system: StarSystem,
+        system: StarSystem,
         private _ui: GameGUI,
         private _radius: number,
         public name: string,
         public color: BABYLON.Color3,
     ) {
-        super();
+        super(system);
 
         // Create a built-in "sphere" shape; with 16 segments.
         this._sphere = BABYLON.MeshBuilder.CreateSphere(
