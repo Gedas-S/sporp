@@ -15,11 +15,11 @@ class MoleHole extends StellarObject {
         this._particleSystem.createPointEmitter(new BABYLON.Vector3(1, 1, 1), new BABYLON.Vector3(-1, -1, -1));
         this._particleSystem.particleTexture = new BABYLON.Texture("textures/circle.png", this._scene);
         this._particleSystem.emitter = position;
-        this._particleSystem.minLifeTime = 0.5;
-        this._particleSystem.maxLifeTime = 0.5;
-        this._particleSystem.minEmitPower = 1;
-        this._particleSystem.maxEmitPower = 1;
-        this._particleSystem.emitRate = 150;
+        this._particleSystem.minLifeTime = 1;
+        this._particleSystem.maxLifeTime = 1;
+        this._particleSystem.minEmitPower = 2;
+        this._particleSystem.maxEmitPower = 2;
+        this._particleSystem.emitRate = 200;
         this._particleSystem.updateSpeed = 0.005;
         this.color = color || new BABYLON.Color3(0.04, 0.4, 0.03);
         this._particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
