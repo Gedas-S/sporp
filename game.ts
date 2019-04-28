@@ -45,15 +45,8 @@ class Game {
         this.ui = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mainUI", true, this._uiScene);
         (<any>this.ui).onGUI = false;
 
-        // Create a test star
-        let star = Star.Random(this._scene, this.ui, "Test star in the middle");
-        // Create a couple of test planets
-        let planet1 = new TestSphere(this._scene, this.ui, 3, 1, 21);
-        let planet2 = new TestSphere(this._scene, this.ui, 1, 3, 16);
+        let starSystem = new StarSystem(this._scene, this.ui);
         let button = new CameraButton(this.ui, this._scene);
-        let planet3 = new TestSphere(this._scene, this.ui, 1.5, 0, 0);
-        planet3.moveCamera(this._camera);
-        let sattelite = new TestSphere(this._scene, this.ui, 2, 0.2, 3, planet1);
     }
 
     doRender(): void {
