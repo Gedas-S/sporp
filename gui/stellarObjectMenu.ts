@@ -1,9 +1,19 @@
-class StellarObjectMenu {
+class GUIContainer {
     protected container: BABYLON.GUI.Container;
+
+    constructor(protected ui: GameGUI){
+        this.container = new BABYLON.GUI.Container("GUIContainer");
+
+        this.container.onPointerEnterObservable.add(function(){ui.mouseOnGUI = true});
+        this.container.onPointerOutObservable.add(function(){ui.mouseOnGUI = false});
+    }
+}
+
+class StellarObjectMenu extends GUIContainer{
     public _shown: boolean = false;
 
-    constructor(protected ui: GameGUI, name: string) {
-        this.container = new BABYLON.GUI.Container("StellarObjectMenu");
+    constructor(ui: GameGUI, name: string) {
+        super(ui);
         this.container.height = "40%";
         this.container.width = "20%";
         this.container.background = "#222222";
@@ -17,9 +27,6 @@ class StellarObjectMenu {
         header.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
         header.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
         this.container.addControl(header);
-
-        this.container.onPointerEnterObservable.add(function(){ui.mouseOnGUI = true});
-        this.container.onPointerOutObservable.add(function(){ui.mouseOnGUI = false});
     }
 
     show(): void {
