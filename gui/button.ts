@@ -16,7 +16,9 @@ class CameraButton{
         this._starSystem = starSystem;
     }
     change_view(){
+        // stop observing a planet
         this._scene.onBeforeRenderObservable.remove(this._starSystem.followControl)
+        // adjust camera to the initial state
         let camera = this._scene.activeCamera as BABYLON.FreeCamera;
         camera.position = new BABYLON.Vector3(0, 15, -40);
         camera.setTarget(BABYLON.Vector3.Zero());

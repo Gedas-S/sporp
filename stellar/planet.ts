@@ -108,8 +108,8 @@ class Planet extends StellarObject {
         this._menu.show();
         this._scene.onBeforeRenderObservable.remove(this.system.followControl)
 
-        var q = (this._scene.onBeforeRenderObservable.add(this.lookAtMe.bind(this)))
-        this.system.followControl = q;
+        let observeThisPlanet = (this._scene.onBeforeRenderObservable.add(this.lookAtMe.bind(this)))
+        this.system.followControl = observeThisPlanet;
     }
 
     deselect(): void {
