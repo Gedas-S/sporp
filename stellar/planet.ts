@@ -98,6 +98,8 @@ class Planet implements StellarObject {
     select(): void {
         this._material.emissiveColor = this._selectedColor;
         this._menu.show();
+
+        (this._scene.activeCamera as BABYLON.TargetCamera).lockedTarget = this._sphere;
     }
 
     deselect(): void {
