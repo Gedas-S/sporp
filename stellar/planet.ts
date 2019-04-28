@@ -3,9 +3,9 @@ class Planet extends StellarObject {
     private _sphere: BABYLON.Mesh;
     private _menu: PlanetMenu;
     private _material: BABYLON.StandardMaterial;
-    private _color: BABYLON.Color3 = BABYLON.Color3.Random();
-    private _selectedColor: BABYLON.Color3 = BABYLON.Color3.Red();
     public position: BABYLON.Vector3;
+    private _selectedColor: BABYLON.Color3 = new BABYLON.Color3(0.1, 0.1, 0.1);
+    private _emissive = BABYLON.Color3.Black();
 
     constructor(
         // private _scene: BABYLON.Scene,
@@ -31,7 +31,8 @@ class Planet extends StellarObject {
 
         this._material.diffuseTexture = texture;
         this._sphere.material = this._material;
-        this._material.emissiveColor = this._color;
+        this._material.specularColor = BABYLON.Color3.Black();
+        this._material.emissiveColor = this._emissive;
         this.updatePosition();
 
         this._menu = new PlanetMenu(this._ui, this);
@@ -116,7 +117,7 @@ class Planet extends StellarObject {
         if (this._ui.mouseOnGUI) {
             return;
         }
-        this._material.emissiveColor = this._color;
+        this._material.emissiveColor = this._emissive;
         this._menu.hide();
     }
 }

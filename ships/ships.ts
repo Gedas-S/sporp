@@ -1,7 +1,7 @@
 class BaseShip{
     private _body: BABYLON.Mesh;
     private _color: BABYLON.Color3 = BABYLON.Color3.Black();
-    private _selectedColor: BABYLON.Color3 = BABYLON.Color3.White();
+    private _selectedColor: BABYLON.Color3 = new BABYLON.Color3(0.2, 0.2, 0.2);
     private _material: BABYLON.StandardMaterial;
     private _selected: boolean = false;
     private _maxSpeed: number = 1;

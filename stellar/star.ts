@@ -33,7 +33,6 @@ class Star extends StellarObject{
         this._light.intensity = Math.log(_radius) / 4;
 
         this._glow = new BABYLON.GlowLayer("SunGlow", system.scene);
-        this._glow.addIncludedOnlyMesh(this._sphere);
 
         this._menu = new StarMenu(this._ui, this);
 

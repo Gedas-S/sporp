@@ -9,6 +9,8 @@ class StarSystem {
 
     constructor(_game: Game, public starMap: StarMap, public ui: GameGUI, public name: string){
         this.scene = new BABYLON.Scene(_game.engine);
+        let light = new BABYLON.HemisphericLight("backlight", new BABYLON.Vector3(0, 1, 0), this.scene)
+        light.intensity = 0.15;
         new BABYLON.FreeCamera('mainCamera', new BABYLON.Vector3(0, 15, -40), this.scene);
         (this.scene.activeCamera as BABYLON.FreeCamera).setTarget(BABYLON.Vector3.Zero());
         this.scene.enablePhysics(new BABYLON.Vector3(0, 0, 0), _game.physicsEngine);
