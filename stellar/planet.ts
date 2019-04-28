@@ -48,10 +48,6 @@ class Planet implements StellarObject {
         this._phase = (this._phase + this._speed) % 360;
     }
 
-    moveCamera(camera: BABYLON.FreeCamera): void {
-        this._camera = camera
-    }
-
     /**
      * update mesh position
      */
