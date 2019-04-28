@@ -41,8 +41,7 @@ class Planet extends StellarObject {
         this._scene.onBeforeStepObservable.add(this.fixedUpdate.bind(this));
         // Bind update to be called every frame
         this._scene.onBeforeRenderObservable.add(this.update.bind(this));
-        // Bind click function (mask 32 is click).
-        this._scene.onPointerObservable.add(this.click.bind(this), 32);
+        this.system.onClickObservable.add(this.click.bind(this));
     }
 
 

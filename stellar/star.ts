@@ -36,8 +36,8 @@ class Star extends StellarObject{
 
         this._menu = new StarMenu(this._ui, this);
 
-        // Bind click function (mask 32 is click).
-        system.scene.onPointerObservable.add(this.click.bind(this), 32);
+        // Bind click function.
+        system.onClickObservable.add(this.click.bind(this), 32);
     }
 
     static Random(system: StarSystem, ui: GameGUI, name: string): Star {

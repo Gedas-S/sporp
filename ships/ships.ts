@@ -25,8 +25,8 @@ class BaseShip{
         this._system.scene.onBeforeStepObservable.add(this.fixedUpdate.bind(this));
         // Bind update to be called every frame
         this._system.scene.onBeforeRenderObservable.add(this.update.bind(this));
-        // Bind click function (mask 32 is click).
-        this._system.scene.onPointerObservable.add(this.click.bind(this), 32);
+        // Bind click function.
+        this._system.onClickObservable.add(this.click.bind(this));
 
         this._menu = new ShipMenu(this._system.ui, this);
         this._system.ui.onKeyDownObservable.add((eventKey)=>{

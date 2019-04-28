@@ -5,10 +5,12 @@ class StarSystem {
     public planets: Planet[] = [];
     public holes: MoleHole[] = [];
     private _planetList: PlanetList;
-    public followControl: BABYLON.Observer<BABYLON.Scene>;
+
+    public onClickObservable: BABYLON.Observable<BABYLON.PointerInfo> = new BABYLON.Observable();
 
     constructor(_game: Game, public starMap: StarMap, public ui: GameGUI, public name: string){
         this.scene = new BABYLON.Scene(_game.engine);
+
         let light = new BABYLON.HemisphericLight("backlight", new BABYLON.Vector3(0, 1, 0), this.scene)
         light.intensity = 0.15;
         new BABYLON.FreeCamera('mainCamera', new BABYLON.Vector3(0, 15, -40), this.scene);

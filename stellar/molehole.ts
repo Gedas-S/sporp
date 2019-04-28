@@ -38,8 +38,8 @@ class MoleHole extends StellarObject {
 
         this.system.holes.push(this);
 
-        // Bind click function (mask 32 is click).
-        this.system.scene.onPointerObservable.add(this.click.bind(this), 32);
+        // Bind click function.
+        this.system.onClickObservable.add(this.click.bind(this));
     }
 
     set color(Color: BABYLON.Color3) {
