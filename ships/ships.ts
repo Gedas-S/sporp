@@ -2,15 +2,18 @@ class BaseShip{
     private _body: BABYLON.Mesh;
     private _color: BABYLON.Color3 = BABYLON.Color3.Black();
     private _selectedColor: BABYLON.Color3 = BABYLON.Color3.White();
-    private _acceleration: BABYLON.Vector3 = BABYLON.Vector3.Zero();
     private _material: BABYLON.StandardMaterial;
     private _selected: boolean = false;
+    private _maxSpeed: number = 1;
+    private _menu: ShipMenu;
+    private _target: any = null;
     constructor(
         private _scene: BABYLON.Scene,
         private _ui: BABYLON.GUI.AdvancedDynamicTexture,
         private _size: number,
         private _velocity: BABYLON.Vector3,
-        private _position: BABYLON.Vector3
+        private _position: BABYLON.Vector3,
+        private _system: StarSystem,
     ){
         this._body = BABYLON.MeshBuilder.CreateBox('body', {size: _size}, this._scene);
 
@@ -26,13 +29,23 @@ class BaseShip{
         this._scene.onBeforeRenderObservable.add(this.update.bind(this));
         // Bind click function (mask 32 is click).
         this._scene.onPointerObservable.add(this.click.bind(this), 32);
+
+        this._menu = new ShipMenu(this._ui, this);
     }
     fixedUpdate(): void {
         // Update phase.
-        this._velocity.addInPlace(this._acceleration);
-        let matrix = new BABYLON.Matrix();
-        BABYLON.Quaternion.RotationAxis(new BABYLON.Vector3(0, 1, 0), Math.PI / 180).toRotationMatrix(matrix);
-        BABYLON.Vector3.TransformCoordinatesToRef(this._velocity, matrix, this._velocity);
+        if (this._target) {
+            this._velocity = this._target.position.subtract(this._body.position)
+            console.log(this._velocity)
+            if (this._velocity.length() > this._maxSpeed) {
+                this._velocity = this._velocity.scale(this._maxSpeed / this._velocity.length())
+        } else {this._velocity = BABYLON.Vector3.Zero()}
+        // rotate function
+        // let matrix = new BABYLON.Matrix();
+        // BABYLON.Quaternion.RotationAxis(new BABYLON.Vector3(0, 1, 0), Math.PI / 180).toRotationMatrix(matrix);
+        // BABYLON.Vector3.TransformCoordinatesToRef(this._velocity, matrix, this._velocity);
+        // BABYLON.Vector3.TransformCoordinatesToRef(this._acceleration, matrix, this._acceleration);
+        }
     }
     private updatePosition(): void {
         this._body.position.addInPlace(this._velocity);
@@ -52,10 +65,42 @@ class BaseShip{
 
     select(): void {
         this._selected = true;
+        this._menu.show();
         this._material.emissiveColor = this._selectedColor;
     }
+
     deselect(): void {
+        if ((<any>this._ui).onGUI) {
+            return;
+        }
         this._selected = false;
+        this._menu.hide()
         this._material.emissiveColor = this._color;
     }
+
+    target_acquired(): void {
+        this._target = this._system.planets[(Math.floor(Math.random() * this._system.planets.length))]
+    }
+    
+    target_lost(): void {
+        this._velocity = BABYLON.Vector3.Zero()
+    }
+}
+
+class ShipMenu extends StellarObjectMenu {
+    constructor(ui: BABYLON.GUI.AdvancedDynamicTexture, ship: BaseShip) {
+        super(ui, "Boaty Mc Boat Face");
+
+        let setTargetBtn = BABYLON.GUI.Button.CreateSimpleButton("SetTarget", "Set Target");
+        setTargetBtn.background = "#DD7777";
+        setTargetBtn.left = "15px";
+        setTargetBtn.top = "70px";
+        setTargetBtn.height = "50px";
+        setTargetBtn.width = "200px";
+        setTargetBtn.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        setTargetBtn.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+        setTargetBtn.onPointerClickObservable.add(ship.target_acquired.bind(ship));
+        this.container.addControl(setTargetBtn);
+    }
+
 }
